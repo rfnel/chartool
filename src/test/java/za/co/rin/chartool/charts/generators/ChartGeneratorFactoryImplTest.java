@@ -17,6 +17,7 @@ public class ChartGeneratorFactoryImplTest {
         this.chartGeneratorFactory  = new ChartGeneratorFactoryImpl();
 
         chartGeneratorFactory.setPieChartGenerator(new PieChartGenerator());
+        chartGeneratorFactory.setLineChartGenerator(new LineChartGenerator());
     }
 
     @Test
@@ -24,6 +25,13 @@ public class ChartGeneratorFactoryImplTest {
         ChartGenerator chartGenerator = chartGeneratorFactory.getChartGenerator(getChartConfig("PieChart"));
 
         assertThat(chartGenerator.getClass(), is(equalTo(PieChartGenerator.class)));
+    }
+
+    @Test
+    public void testGetChartGeneratorForLineChart() throws Exception {
+        ChartGenerator chartGenerator = chartGeneratorFactory.getChartGenerator(getChartConfig("LineChart"));
+
+        assertThat(chartGenerator.getClass(), is(equalTo(LineChartGenerator.class)));
     }
 
     private ChartDefinition getChartConfig(String type) {

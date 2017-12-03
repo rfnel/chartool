@@ -9,6 +9,8 @@ public class ChartGeneratorFactoryImpl implements ChartGeneratorFactory {
 
     @Autowired
     private PieChartGenerator pieChartGenerator;
+    @Autowired
+    private LineChartGenerator lineChartGenerator;
 
     @Override
     public ChartGenerator getChartGenerator(ChartDefinition config) {
@@ -16,7 +18,8 @@ public class ChartGeneratorFactoryImpl implements ChartGeneratorFactory {
         switch (config.getType()) {
             case "PieChart":
                 return pieChartGenerator;
-
+            case "LineChart":
+                return lineChartGenerator;
             default:
                 throw new IllegalArgumentException("Unable to retrieve chart generator for: " + config.getType());
         }
@@ -24,5 +27,9 @@ public class ChartGeneratorFactoryImpl implements ChartGeneratorFactory {
 
     void setPieChartGenerator(PieChartGenerator pieChartGenerator) {
         this.pieChartGenerator = pieChartGenerator;
+    }
+
+    public void setLineChartGenerator(LineChartGenerator lineChartGenerator) {
+        this.lineChartGenerator = lineChartGenerator;
     }
 }

@@ -2,6 +2,8 @@ package za.co.rin.chartool.charts.generators;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 @Component
-public class PieChartGenerator implements ChartGenerator {
+public class LineChartGenerator implements ChartGenerator {
 
     //TODO:  Extract database logic into separate class.
     //TODO:  Unit testing.
@@ -24,22 +26,25 @@ public class PieChartGenerator implements ChartGenerator {
     @Override
     public JFreeChart generateChart(ChartDefinition chartDefinition) {
         List<LabelValuePair> labelValuePairs = retrieveData(chartDefinition);
-        PieDataset pieDataSet = createPieDataSet(labelValuePairs);
+        DefaultCategoryDataset categoryDataSet = createCategoryDataSet(labelValuePairs);
 
-        return ChartFactory.createPieChart3D(chartDefinition.getName(),
-                pieDataSet,
+        return ChartFactory.createLineChart(chartDefinition.getName(),
+                "X",
+                "Y",
+                categoryDataSet,
+                PlotOrientation.VERTICAL,
                 true,
                 false,
                 false);
     }
 
-    private PieDataset createPieDataSet(List<LabelValuePair> labelValuePairs) {
-        DefaultPieDataset pieDataSet = new DefaultPieDataset();
+    private DefaultCategoryDataset createCategoryDataSet(List<LabelValuePair> labelValuePairs) {
+        DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
         for (LabelValuePair labelValuePair : labelValuePairs) {
-            pieDataSet.setValue(labelValuePair.label, labelValuePair.value);
+            categoryDataset.setValue(labelValuePair.value, "X", labelValuePair.label);
         }
 
-        return pieDataSet;
+        return categoryDataset;
     }
 
     private List<LabelValuePair> retrieveData(ChartDefinition chartDefinition) {

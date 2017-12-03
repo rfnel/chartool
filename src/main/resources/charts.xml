@@ -19,4 +19,15 @@
             LIMIT 10;
         </query>
     </Chart>
+    <Chart>
+        <name>CountryIndependenceByYear</name>
+        <type>LineChart</type>
+        <query>
+            SELECT IndepYear, COUNT(*)
+            FROM world.country
+            WHERE IndepYear >= 1980
+            GROUP BY IndepYear
+            ORDER BY IndepYear ASC;
+        </query>
+    </Chart>
 </Charts>
