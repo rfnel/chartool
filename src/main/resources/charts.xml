@@ -1,0 +1,22 @@
+<Charts>
+    <Chart>
+        <name>MostPopulous</name>
+        <type>PieChart</type>
+        <query>
+            SELECT Name, Population
+            FROM World.country
+            ORDER BY Population DESC
+            LIMIT 10;
+        </query>
+    </Chart>
+    <Chart>
+        <name>LeastPopulous</name>
+        <type>PieChart</type>
+        <query>
+            SELECT Name, Population
+            FROM World.country
+            ORDER BY Population ASC
+            LIMIT 10;
+        </query>
+    </Chart>
+</Charts>
