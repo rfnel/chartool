@@ -70,6 +70,27 @@ public class ChartController {
         return createResponse(jFreeChart);
     }
 
+    @RequestMapping("/allCharts")
+    @ResponseBody
+    public String requestAllCharts() {
+        StringBuilder chartsHtml = new StringBuilder();
+        for (ChartDefinition chartDefinition : chartDefinitions.values()) {
+            chartsHtml.append("        <img src=\"chart?name=" + chartDefinition.getName() + "\"/>");
+        }
+
+        String responseHtml = "<html>\n" +
+                "    <head>\n" +
+                "        <title>Charts</title>\n" +
+                "    </head>\n" +
+                "    <body>\n" +
+                "        <h1>Chart Dashboard</h1>\n" +
+                chartsHtml +
+                "    </body>\n" +
+                "</html>";
+
+        return responseHtml;
+    }
+
     private ResponseEntity<byte[]> createResponse(JFreeChart jFreeChart) {
         byte[] image = chartToImage(jFreeChart);
 
