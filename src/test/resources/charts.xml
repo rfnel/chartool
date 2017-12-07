@@ -1,14 +1,11 @@
 <Charts>
-    <!--1 or more repetitions:-->
     <Dashboard>
-        <id>test</id>
-        <name>Test Dashboard</name>
-        <description>Test Dashboard</description>
-        <!--1 or more repetitions:-->
+        <id>test1</id>
+        <name>Test Dashboard 1</name>
+        <description>Test Dashboard 1</description>
         <Chart>
             <id>mp</id>
-            <name>Most Populous</name>
-            <description>Most populous countries</description>
+            <name>MostPopulous</name>
             <type>PieChart</type>
             <query>
                 SELECT Name, Population
@@ -18,9 +15,7 @@
             </query>
         </Chart>
         <Chart>
-            <id>lp</id>
             <name>LeastPopulous</name>
-            <description>Least populous countries</description>
             <type>PieChart</type>
             <query>
                 SELECT Name, Population
@@ -32,7 +27,22 @@
         <Chart>
             <id>ciby</id>
             <name>CountryIndependenceByYear</name>
-            <description>Years in which countires declared independence</description>
+            <type>LineChart</type>
+            <query>
+                SELECT IndepYear, COUNT(*)
+                FROM world.country
+                WHERE IndepYear >= 1980
+                GROUP BY IndepYear
+                ORDER BY IndepYear ASC;
+            </query>
+        </Chart>
+    </Dashboard>
+    <Dashboard>
+        <id>test2</id>
+        <name>Test Dashboard 2</name>
+        <description>Test Dashboard 2</description>
+        <Chart>
+            <name>CountryIndependenceByYear</name>
             <type>LineChart</type>
             <query>
                 SELECT IndepYear, COUNT(*)

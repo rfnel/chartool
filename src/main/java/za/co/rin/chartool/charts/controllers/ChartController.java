@@ -3,23 +3,24 @@ package za.co.rin.chartool.charts.controllers;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import javax.annotation.PostConstruct;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.oxm.Unmarshaller;
 import za.co.rin.chartool.charts.config.ChartDefinition;
+import za.co.rin.chartool.charts.config.DashboardDefinition;
 import za.co.rin.chartool.charts.generators.ChartGenerator;
 import za.co.rin.chartool.charts.generators.ChartGeneratorFactory;
-import za.co.rin.chartool.generated.ChartType;
+import za.co.rin.chartool.generated.Chart;
 import za.co.rin.chartool.generated.Charts;
+import za.co.rin.chartool.generated.Dashboard;
 
-import javax.annotation.PostConstruct;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -36,33 +37,18 @@ public class ChartController {
 
     @Autowired
     private Unmarshaller unmarshaller;
-    private Map<String, ChartDefinition> chartDefinitions;
+
+    private Map<String, DashboardDefinition> dashboardDefinitions;
 
     @PostConstruct
-    public void loadChartDefinitions() {
-        this.chartDefinitions = new HashMap<>();
-
-        Charts charts = null;
-        try {
-            charts = (Charts) unmarshaller.unmarshal(new StreamSource(this.getClass().getClassLoader().getResourceAsStream("charts.xml")));
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to load chart definitions.");
-        }
-
-        for (ChartType chart : charts.getChart()) {
-            ChartDefinition chartDefinition = new ChartDefinition();
-            chartDefinition.setType(chart.getType());
-            chartDefinition.setName(chart.getName());
-            chartDefinition.setQuery(chart.getQuery());
-
-            chartDefinitions.put(chart.getName(), chartDefinition);
-        }
+    public void initState() {
+        this.dashboardDefinitions = loadDashboardDefinitions();
     }
 
     @RequestMapping("/chart")
     @ResponseBody
-    public ResponseEntity<byte[]> requestChart(@RequestParam String name) {
-        ChartDefinition chartDefinition = getChartDefinition(name);
+    public ResponseEntity<byte[]>  requestChart(@RequestParam String dashboardId, @RequestParam String chartId) {
+        ChartDefinition chartDefinition = getChartDefinition(dashboardId, chartId);
 
         ChartGenerator chartGenerator = chartGeneratorFactory.getChartGenerator(chartDefinition);
         JFreeChart jFreeChart = chartGenerator.generateChart(chartDefinition);
@@ -70,25 +56,87 @@ public class ChartController {
         return createResponse(jFreeChart);
     }
 
-    @RequestMapping("/allCharts")
+    @RequestMapping("/dashboard")
     @ResponseBody
-    public String requestAllCharts() {
+    public String requestDashBoard(@RequestParam String id) {
         StringBuilder chartsHtml = new StringBuilder();
-        for (ChartDefinition chartDefinition : chartDefinitions.values()) {
-            chartsHtml.append("        <img src=\"chart?name=" + chartDefinition.getName() + "\"/>");
+        DashboardDefinition dashboardDefinition =  getDashboardDefinition(id);
+        for (ChartDefinition chartDefinition : dashboardDefinition.getCharts()) {
+            chartsHtml.append("        <img src=\"chart?dashboardId=" + dashboardDefinition.getId() + "&chartId=" + chartDefinition.getId() + "\"/><br /><br />");
         }
 
         String responseHtml = "<html>\n" +
                 "    <head>\n" +
-                "        <title>Charts</title>\n" +
+                "        <title>" + dashboardDefinition.getName() + "</title>\n" +
                 "    </head>\n" +
                 "    <body>\n" +
-                "        <h1>Chart Dashboard</h1>\n" +
-                chartsHtml +
+                "        <h1>" + dashboardDefinition.getName() + "</h1>\n" +
+                "        <p>" + dashboardDefinition.getDescription() + "</p>" +
+        chartsHtml +
                 "    </body>\n" +
                 "</html>";
 
         return responseHtml;
+    }
+
+    protected Map<String, DashboardDefinition> loadDashboardDefinitions() {
+        Map<String, DashboardDefinition> dashboardDefinitions = new HashMap<>();
+
+        Charts charts = loadChartsFromXml();
+
+        for (Dashboard dashboard : charts.getDashboard()) {
+            loadDashboardDefition(dashboardDefinitions, dashboard);
+        }
+
+        return dashboardDefinitions;
+    }
+
+    private void loadDashboardDefition(Map<String, DashboardDefinition> dashboardDefinitions, Dashboard dashboard) {
+        DashboardDefinition dashboardDefinition = new DashboardDefinition();
+        dashboardDefinition.setId(dashboard.getId());
+        dashboardDefinition.setName(dashboard.getName());
+        dashboardDefinition.setDescription(dashboard.getDescription());
+
+        for (Chart chart : dashboard.getChart()) {
+            ChartDefinition chartDefinition = loadChartDefinition(chart);
+
+            dashboardDefinition.addChart(chartDefinition);
+        }
+
+        dashboardDefinitions.put(dashboard.getId(), dashboardDefinition);
+    }
+
+    private ChartDefinition loadChartDefinition(Chart chart) {
+        ChartDefinition chartDefinition = new ChartDefinition();
+
+        chartDefinition.setId(chart.getId());
+        chartDefinition.setName(chart.getName());
+        chartDefinition.setDescription(chart.getDescription());
+        chartDefinition.setType(chart.getType());
+        chartDefinition.setQuery(chart.getQuery());
+        return chartDefinition;
+    }
+
+    private Charts loadChartsFromXml() {
+        Charts charts = null;
+        try {
+            charts = (Charts) unmarshaller.unmarshal(new StreamSource(this.getClass().getClassLoader().getResourceAsStream("charts.xml")));
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to load chart definitions.");
+        }
+        return charts;
+    }
+
+    private ChartDefinition getChartDefinition(String dashboardId, String chartId) {
+        //TODO:  Optimize to load charts into map for each dashboard.
+        DashboardDefinition dashboardDefinition = getDashboardDefinition(dashboardId);
+        for (ChartDefinition chartDefinition : dashboardDefinition.getCharts()) {
+            if (chartId.equals(chartDefinition.getId())) {
+                return chartDefinition;
+            }
+        }
+
+        return null;
     }
 
     private ResponseEntity<byte[]> createResponse(JFreeChart jFreeChart) {
@@ -100,8 +148,8 @@ public class ChartController {
         return new ResponseEntity<>(image, headers, HttpStatus.OK);
     }
 
-    private ChartDefinition getChartDefinition(String name) {
-        return chartDefinitions.get(name);
+    private DashboardDefinition getDashboardDefinition(String id) {
+        return dashboardDefinitions.get(id);
     }
 
     private byte[] chartToImage(JFreeChart jFreeChart) {
@@ -112,5 +160,13 @@ public class ChartController {
         } catch (IOException ex) {
             throw new IllegalStateException("Failed to create image from chart.");
         }
+    }
+
+    public void setUnmarshaller(Unmarshaller unmarshaller) {
+        this.unmarshaller = unmarshaller;
+    }
+
+    public void setChartGeneratorFactory(ChartGeneratorFactory chartGeneratorFactory) {
+        this.chartGeneratorFactory = chartGeneratorFactory;
     }
 }

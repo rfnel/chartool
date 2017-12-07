@@ -4,13 +4,23 @@
     <xs:element name="Charts">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="ChartType" name="Chart" maxOccurs="unbounded"/>
+                <xs:element type="Dashboard" name="Dashboard" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="ChartType">
+    <xs:complexType name="Dashboard">
         <xs:sequence>
+            <xs:element type="xs:string" name="id" />
             <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="description"/>
+            <xs:element type="Chart" name="Chart" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Chart">
+        <xs:sequence>
+            <xs:element type="xs:string" name="id" />
+            <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="description"/>
             <xs:element type="xs:string" name="type"/>
             <xs:element type="xs:string" name="query"/>
         </xs:sequence>
