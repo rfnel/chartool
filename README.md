@@ -14,6 +14,7 @@ Chartool should always remain simple to use - a request to a URL should return a
 - User-configurable charts/dashboards that don't require redeploys.
 - Support for multiple data sources.
 
-#Contributors
-If you do something, you can add your name - never remove someone else's name.
-Riaan Nel <https://github.com/rfnel>
+# Contributors
+If you do something, you can add your name - but never remove someone else's name.
+
+- Riaan Nel <<https://github.com/rfnel>>
