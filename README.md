@@ -13,3 +13,7 @@ Chartool should always remain simple to use - a request to a URL should return a
 - Prettier charting tool - perhaps JS charts on the front-end rather than images from the back-end.
 - User-configurable charts/dashboards that don't require redeploys.
 - Support for multiple data sources.
+
+#Contributors
+If you do something, you can add your name - never remove someone else's name.
+Riaan Nel <https://github.com/rfnel>
