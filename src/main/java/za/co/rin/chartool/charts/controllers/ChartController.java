@@ -4,6 +4,7 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,7 @@ import za.co.rin.chartool.generated.Dashboard;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,26 +59,12 @@ public class ChartController {
     }
 
     @RequestMapping("/dashboard")
-    @ResponseBody
-    public String requestDashBoard(@RequestParam String id) {
-        StringBuilder chartsHtml = new StringBuilder();
+    public String requestDashBoard(@RequestParam String id, Model model) {
         DashboardDefinition dashboardDefinition =  getDashboardDefinition(id);
-        for (ChartDefinition chartDefinition : dashboardDefinition.getCharts()) {
-            chartsHtml.append("        <img src=\"chart?dashboardId=" + dashboardDefinition.getId() + "&chartId=" + chartDefinition.getId() + "\"/><br /><br />");
-        }
 
-        String responseHtml = "<html>\n" +
-                "    <head>\n" +
-                "        <title>" + dashboardDefinition.getName() + "</title>\n" +
-                "    </head>\n" +
-                "    <body>\n" +
-                "        <h1>" + dashboardDefinition.getName() + "</h1>\n" +
-                "        <p>" + dashboardDefinition.getDescription() + "</p>" +
-        chartsHtml +
-                "    </body>\n" +
-                "</html>";
+        model.addAttribute("dashboard", dashboardDefinition);
 
-        return responseHtml;
+        return "dashboard";
     }
 
     protected Map<String, DashboardDefinition> loadDashboardDefinitions() {
