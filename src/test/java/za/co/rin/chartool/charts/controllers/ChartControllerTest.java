@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ui.ExtendedModelMap;
+import org.springframework.ui.Model;
 import za.co.rin.chartool.charts.config.ChartDefinition;
 import za.co.rin.chartool.charts.config.DashboardDefinition;
 import za.co.rin.chartool.charts.generators.ChartGenerator;
@@ -60,10 +62,11 @@ public class ChartControllerTest {
     
     @Test
     public void testThatDashboardIsReturned() {
-        String dashBoard = chartController.requestDashBoard("test1");
+        ExtendedModelMap model = new ExtendedModelMap();
+        String dashBoard = chartController.requestDashBoard("test1", model);
         
-        assertThat(dashBoard, containsString("<html>"));
-        assertThat(dashBoard, containsString("chart?dashboardId=test1&chartId=mp"));
+        assertThat(dashBoard, is(equalTo("dashboard")));
+        assertThat(model.get("dashboard"), is(notNullValue()));
     }
 
     @Test
