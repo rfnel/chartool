@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${dashboard.name}"></title>
+</head>
+<body>
+    <div>
+        <h1 th:text="${dashboard.name}"></h1>
+        <div th:each="chart : ${dashboard.charts}">
+            <img th:src="|chart?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|"/>
+        </div>
+    </div>
+</body>
+</html>
