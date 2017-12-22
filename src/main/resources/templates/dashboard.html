@@ -2,13 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title th:text="${dashboard.name}"></title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
 </head>
 <body>
-    <div>
+    <div class="container">
         <h1 th:text="${dashboard.name}"></h1>
-        <div th:each="chart : ${dashboard.charts}">
-            <img th:src="|chart?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|"/>
+        <div th:each="chart,iterStat : ${dashboard.charts}">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img th:src="|chart?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|"/>
+                </div>
+            </div>
         </div>
     </div>
 </body>
