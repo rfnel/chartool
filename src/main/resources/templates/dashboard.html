@@ -14,14 +14,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <h1 th:text="${dashboard.name}"></h1>
         <div th:each="chart,iterStat : ${dashboard.charts}">
-            <div class="row">
-                <div class="col-sm-4">
-                    <img th:src="|chart?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|"/>
-                </div>
+            <div class="col-sm-6">
+                <img th:src="|chart?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|" width="100%"/>
             </div>
+            <br th:if="${iterStat.count % 2 == 0}" />
         </div>
     </div>
 </body>
