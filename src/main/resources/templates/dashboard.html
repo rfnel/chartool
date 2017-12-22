@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title th:text="${dashboard.name}"></title>
+    <link rel="stylesheet" href="css/chartool.css" />
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -12,15 +12,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
+
+
+    <title th:text="${dashboard.name}"></title>
 </head>
 <body>
     <div class="container-fluid">
-        <h1 th:text="${dashboard.name}"></h1>
-        <div th:each="chart,iterStat : ${dashboard.charts}">
-            <div class="col-sm-6">
+        <h1 th:text="${dashboard.name}">Dashboard</h1>
+        <div th:each="chart,iterStat : ${dashboard.charts}" class="col-sm-6">
+            <div>
                 <img th:src="|chart?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|" width="100%"/>
             </div>
-            <br th:if="${iterStat.count % 2 == 0}" />
         </div>
     </div>
 </body>
