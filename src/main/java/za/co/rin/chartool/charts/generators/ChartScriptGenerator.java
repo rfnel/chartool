@@ -2,8 +2,7 @@ package za.co.rin.chartool.charts.generators;
 
 import za.co.rin.chartool.charts.config.ChartDefinition;
 
-public interface ChartGeneratorFactory {
+public interface ChartScriptGenerator {
 
-    ChartGenerator getChartGenerator(ChartDefinition config);
-
+    String getChartScript(ChartDefinition chartDefinition);
 }

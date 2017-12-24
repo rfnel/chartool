@@ -1,56 +1,21 @@
 <Charts>
     <Dashboard>
-        <id>test1</id>
-        <name>Test Dashboard 1</name>
-        <description>Test Dashboard 1</description>
+        <id>test</id>
+        <name>Test Dashboard</name>
+        <description>Test Dashboard Description</description>
         <Chart>
-            <id>mp</id>
-            <name>MostPopulous</name>
+            <id>test1</id>
+            <name>Test Chart 1</name>
+            <description>Test Chart 1 Description</description>
             <type>PieChart</type>
-            <query>
-                SELECT Name, Population
-                FROM World.country
-                ORDER BY Population DESC
-                LIMIT 10;
-            </query>
+            <query>SELECT * FROM TEST1;</query>
         </Chart>
         <Chart>
-            <name>LeastPopulous</name>
+            <id>test2</id>
+            <name>Test Chart 2</name>
+            <description>Test Chart 2 Description</description>
             <type>PieChart</type>
-            <query>
-                SELECT Name, Population
-                FROM World.country
-                ORDER BY Population ASC
-                LIMIT 10;
-            </query>
-        </Chart>
-        <Chart>
-            <id>ciby</id>
-            <name>CountryIndependenceByYear</name>
-            <type>LineChart</type>
-            <query>
-                SELECT IndepYear, COUNT(*)
-                FROM world.country
-                WHERE IndepYear >= 1980
-                GROUP BY IndepYear
-                ORDER BY IndepYear ASC;
-            </query>
-        </Chart>
-    </Dashboard>
-    <Dashboard>
-        <id>test2</id>
-        <name>Test Dashboard 2</name>
-        <description>Test Dashboard 2</description>
-        <Chart>
-            <name>CountryIndependenceByYear</name>
-            <type>LineChart</type>
-            <query>
-                SELECT IndepYear, COUNT(*)
-                FROM world.country
-                WHERE IndepYear >= 1980
-                GROUP BY IndepYear
-                ORDER BY IndepYear ASC;
-            </query>
+            <query>SELECT * FROM TEST2;</query>
         </Chart>
     </Dashboard>
 </Charts>

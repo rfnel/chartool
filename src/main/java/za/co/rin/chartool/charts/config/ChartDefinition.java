@@ -8,6 +8,8 @@ public class ChartDefinition {
     private String type;
     private String query;
 
+    private String loadFunction;
+
     public ChartDefinition() {
     }
 
@@ -49,5 +51,13 @@ public class ChartDefinition {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getLoadFunction() {
+        if (loadFunction == null) {
+            loadFunction = "load_" + id + "_chart";
+        }
+
+        return loadFunction;
     }
 }

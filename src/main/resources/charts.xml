@@ -1,45 +1,28 @@
 <Charts>
-    <!--1 or more repetitions:-->
     <Dashboard>
-        <id>test</id>
-        <name>Test Dashboard</name>
-        <description>Test Dashboard</description>
-        <!--1 or more repetitions:-->
+        <id>sakila</id>
+        <name>Sakila Dashboard</name>
+        <description>Dashboard based on test data from the Sakila database in MySQL</description>
         <Chart>
-            <id>mp</id>
-            <name>Most Populous</name>
-            <description>Most populous countries</description>
+            <id>ratings</id>
+            <name>Film Ratings</name>
+            <description>Total number of films by rating</description>
             <type>PieChart</type>
             <query>
-                SELECT Name, Population
-                FROM World.country
-                ORDER BY Population DESC
-                LIMIT 10;
+                SELECT f.rating, COUNT(*)
+                FROM film f
+                GROUP BY f.rating
             </query>
         </Chart>
         <Chart>
-            <id>lp</id>
-            <name>LeastPopulous</name>
-            <description>Least populous countries</description>
-            <type>PieChart</type>
-            <query>
-                SELECT Name, Population
-                FROM World.country
-                ORDER BY Population ASC
-                LIMIT 10;
-            </query>
-        </Chart>
-        <Chart>
-            <id>ciby</id>
-            <name>CountryIndependenceByYear</name>
-            <description>Years in which countires declared independence</description>
+            <id>payments</id>
+            <name>Payments by Month</name>
+            <description>Total of payment amounts during different months of the year</description>
             <type>LineChart</type>
             <query>
-                SELECT IndepYear, COUNT(*)
-                FROM world.country
-                WHERE IndepYear >= 1980
-                GROUP BY IndepYear
-                ORDER BY IndepYear ASC;
+                SELECT MONTH(p.payment_date), SUM(amount)
+                FROM sakila.payment p
+                GROUP BY MONTH(p.payment_date);
             </query>
         </Chart>
     </Dashboard>

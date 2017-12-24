@@ -1,0 +1,3 @@
+function $LOAD_FUNCTION() {
+    TEST, TEST, TEST
+}

@@ -1,29 +1,29 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="css/chartool.css" />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
+        <!-- ChartJS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js" />
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
-
-
-    <title th:text="${dashboard.name}"></title>
-</head>
-<body>
-    <div class="container-fluid">
-        <h1 th:text="${dashboard.name}">Dashboard</h1>
-        <div th:each="chart,iterStat : ${dashboard.charts}" class="col-sm-6">
-            <div>
-                <img th:src="|chart?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|" width="100%"/>
+        <title th:text="${dashboard.name}"></title>
+    </head>
+    <body>
+        <div id="js-charts" class="container-fluid">
+            <h1 th:text="${dashboard.name}">Dashboard</h1>
+            <div th:each="chart : ${dashboard.charts}" class="col-sm-6">
+                <div>
+                    <canvas th:id="${chart.id}" width="100%"></canvas>
+                    <script th:src="|getChartJS?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|" th:onload="|${chart.loadFunction}()|"/>
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
