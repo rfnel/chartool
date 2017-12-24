@@ -50,7 +50,7 @@ public class LineChartScriptGeneratorTest {
         String chartScript = lineChartScriptGenerator.getChartScript(testChartDefinition);
         assertThat(chartScript, containsString("function load_test_chart()"));
         assertThat(chartScript, containsString("type: 'line',"));
-        assertThat(chartScript, containsString("label: 'Test Chart'"));
+        assertThat(chartScript, containsString("label: 'Test Chart Label'"));
         assertThat(chartScript, containsString("data: [1,2]"));
         assertThat(chartScript, containsString("backgroundColor: " + TEST_COLOR));
         assertThat(chartScript, containsString(" document.getElementById(\"test\")"));
@@ -68,6 +68,7 @@ public class LineChartScriptGeneratorTest {
         chartDefinition.setId("test");
         chartDefinition.setName("Test Chart");
         chartDefinition.setDescription("Test Chart Description");
+        chartDefinition.setLabel("Test Chart Label");
 
         return chartDefinition;
     }

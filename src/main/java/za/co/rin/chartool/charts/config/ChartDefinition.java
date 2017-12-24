@@ -6,6 +6,7 @@ public class ChartDefinition {
     private String name;
     private String description;
     private String type;
+    private String label;
     private String query;
 
     private String loadFunction;
@@ -43,6 +44,14 @@ public class ChartDefinition {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getId() {

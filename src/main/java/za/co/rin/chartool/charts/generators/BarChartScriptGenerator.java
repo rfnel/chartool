@@ -36,7 +36,7 @@ public class BarChartScriptGenerator implements ChartScriptGenerator {
         return template
                 .replaceAll("\\$CHART_ID", chartDefinition.getId())
                 .replaceAll("\\$CHART_NAME", chartDefinition.getName())
-                .replaceAll("\\$DATASET_LABEL", chartDefinition.getName())
+                .replaceAll("\\$DATASET_LABEL", chartDefinition.getLabel())
                 .replaceAll("\\$BACKGROUND_COLOR", color)
                 .replaceAll("\\$DATA", jsonWrapper.getData())
                 .replaceAll("\\$LABELS", jsonWrapper.getLabels())

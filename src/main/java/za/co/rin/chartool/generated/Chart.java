@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="label" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="query" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlType;
     "name",
     "description",
     "type",
+    "label",
     "query"
 })
 public class Chart {
@@ -55,6 +57,8 @@ public class Chart {
     protected String description;
     @XmlElement(required = true)
     protected String type;
+    @XmlElement(required = false)
+    protected String label;
     @XmlElement(required = true)
     protected String query;
 
@@ -152,6 +156,30 @@ public class Chart {
      */
     public void setType(String value) {
         this.type = value;
+    }
+
+    /**
+     * Gets the value of the label property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * Sets the value of the label property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setLabel(String value) {
+        this.label = value;
     }
 
     /**

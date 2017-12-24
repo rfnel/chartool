@@ -19,6 +19,7 @@
             <name>Payments by Month</name>
             <description>Total of payment amounts during different months of the year</description>
             <type>LineChart</type>
+            <label>Payment amount in USD</label>
             <query>
                 SELECT MONTH(p.payment_date), SUM(amount)
                 FROM sakila.payment p
@@ -30,6 +31,7 @@
             <name>Most Popular Actors</name>
             <description>Top 10 actors who have starred in the most films</description>
             <type>BarChart</type>
+            <label>Number of films</label>
             <query>
                 SELECT CONCAT(first_name, ' ', last_name), COUNT(*)
                 FROM film_actor fa INNER JOIN actor a ON a.actor_id = fa.actor_id

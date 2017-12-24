@@ -47,6 +47,7 @@ public class DashboardManagerImplTest {
         assertThat(chartDefinition.getName(), is(equalTo("Test Chart 1")));
         assertThat(chartDefinition.getDescription(), is(equalTo("Test Chart 1 Description")));
         assertThat(chartDefinition.getType(), is(equalTo("PieChart")));
+        assertThat(chartDefinition.getLabel(), is(equalTo("Test Chart 1 Label")));
         assertThat(chartDefinition.getQuery(), is(equalTo("SELECT * FROM TEST1;")));
     }
 }

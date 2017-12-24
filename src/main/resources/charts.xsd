@@ -22,6 +22,7 @@
             <xs:element type="xs:string" name="name"/>
             <xs:element type="xs:string" name="description"/>
             <xs:element type="xs:string" name="type"/>
+            <xs:element type="xs:string" name="label" minOccurs="0" maxOccurs="1"/>
             <xs:element type="xs:string" name="query"/>
         </xs:sequence>
     </xs:complexType>
