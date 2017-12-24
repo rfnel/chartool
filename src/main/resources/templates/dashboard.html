@@ -4,26 +4,47 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
-        <!-- ChartJS -->
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+        <!-- Chart.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js" />
 
         <title th:text="${dashboard.name}"></title>
     </head>
     <body>
-        <div id="js-charts" class="container-fluid">
-            <h1 th:text="${dashboard.name}">Dashboard</h1>
-            <div th:each="chart : ${dashboard.charts}" class="col-sm-6">
-                <div>
-                    <canvas th:id="${chart.id}" width="100%"></canvas>
-                    <script th:src="|getChartJS?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|" th:onload="|${chart.loadFunction}()|"/>
+        <div class="jumbotron rounded">
+            <div class="container">
+                <h1 class="display-3" th:text="${dashboard.name}">Dashboard</h1>
+                <p class="lead" th:text="${dashboard.description}">Dashboard</p>
+            </div>
+        </div>
+        <div id="js-charts" class="container">
+            <div class="row">
+                <div th:each="chart : ${dashboard.charts}" class="col-sm-6">
+                    <p>
+                        <button class="btn btn-secondary w-100" type="button" data-toggle="collapse" th:attr="data-target='#collapse_' + ${chart.id}" aria-expanded="true" aria-controls="collapseCharts">
+                            <span th:text="${chart.name}">Chart</span>
+                        </button>
+                    </p>
+                    <div class="collapse show" th:id="|collapse_${chart.id}|">
+                        <div class="card card-body in">
+                            <canvas th:id="${chart.id}" class="bg-white rounded" width="100%"></canvas>
+                            <script th:src="|getChartJS?dashboardId=${dashboard.id}&amp;chartId=${chart.id}|" th:onload="|${chart.loadFunction}()|"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <footer>
+            <nav class="navbar fixed-bottom navbar-light bg-faded text-center">
+                <div class="container-fluid ">
+                    <span class="text-muted col-sm-12">Chartool - Free &amp; Open-Source - <a href="https://github.com/rfnel/chartool">https://github.com/rfnel/chartool</a></span>
+                </div>
+            </nav>
+        </footer>
     </body>
 </html>

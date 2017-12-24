@@ -8,16 +8,18 @@ function $LOAD_FUNCTION() {
        labels: [$LABELS]
     };
 
+    options =  {
+          title: {
+              display: true,
+              text: '$CHART_NAME',
+              fontSize: 24
+          }
+      }
+
     var ctx = document.getElementById("$CHART_ID").getContext('2d');
     var chart = new Chart(ctx, {
         type: 'line',
         data: data,
-        options: {
-            title: {
-                display: true,
-                text: '$CHART_NAME',
-                fontSize: 24
-            }
-        }
+        options: options
     });
 }
