@@ -19,6 +19,7 @@ public class ChartScriptGeneratorFactoryImplTest {
 
         this.chartScriptGeneratorFactory.setPieChartScriptGenerator(new PieChartScriptGenerator());
         this.chartScriptGeneratorFactory.setLineChartScriptGenerator(new LineChartScriptGenerator());
+        this.chartScriptGeneratorFactory.setBarChartScriptGenerator(new BarChartScriptGenerator());
     }
 
     @Test
@@ -35,6 +36,14 @@ public class ChartScriptGeneratorFactoryImplTest {
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
         assertThat(chartGenerator, is(Matchers.instanceOf(LineChartScriptGenerator.class)));
+    }
+
+    @Test
+    public void testGetChartGeneratorForBarChart() throws Exception {
+        ChartDefinition chartDefinition = getChartConfig("BarChart");
+        ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
+
+        assertThat(chartGenerator, is(Matchers.instanceOf(BarChartScriptGenerator.class)));
     }
 
     private ChartDefinition getChartConfig(String type) {

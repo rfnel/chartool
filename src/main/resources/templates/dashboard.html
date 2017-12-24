@@ -19,16 +19,17 @@
         <div class="jumbotron rounded">
             <div class="container">
                 <h1 class="display-3" th:text="${dashboard.name}">Dashboard</h1>
-                <p class="lead" th:text="${dashboard.description}">Dashboard</p>
+                <p class="lead" th:text="${dashboard.description}">Description</p>
             </div>
         </div>
         <div id="js-charts" class="container">
-            <div class="row">
-                <div th:each="chart : ${dashboard.charts}" class="col-sm-6">
+            <div th:each="chartsByRow : ${dashboard.chartsByRow}" class="row pb-3">
+                <div th:each="chart : ${chartsByRow}"  class="col-sm-6">
                     <p>
                         <button class="btn btn-secondary w-100" type="button" data-toggle="collapse" th:attr="data-target='#collapse_' + ${chart.id}" aria-expanded="true" aria-controls="collapseCharts">
                             <span th:text="${chart.name}">Chart</span>
                         </button>
+                        <small class="text-muted" th:text="${chart.description}">Description</small>
                     </p>
                     <div class="collapse show" th:id="|collapse_${chart.id}|">
                         <div class="card card-body in">

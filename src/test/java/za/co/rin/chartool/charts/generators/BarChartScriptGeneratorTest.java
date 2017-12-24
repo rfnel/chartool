@@ -15,9 +15,9 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class LineChartScriptGeneratorTest {
+public class BarChartScriptGeneratorTest {
 
-    private LineChartScriptGenerator lineChartScriptGenerator = new LineChartScriptGenerator();
+    private BarChartScriptGenerator barChartScriptGenerator = new BarChartScriptGenerator();
 
     private JUnit4Mockery context = new JUnit4Mockery();
     private ChartColorManager chartColorManagerMock;
@@ -30,8 +30,8 @@ public class LineChartScriptGeneratorTest {
         chartColorManagerMock = context.mock(ChartColorManager.class);
         chartDataSourceMock = context.mock(ChartDataSource.class);
 
-        lineChartScriptGenerator.setChartColorManager(chartColorManagerMock);
-        lineChartScriptGenerator.setChartDataSource(chartDataSourceMock);
+        barChartScriptGenerator.setChartColorManager(chartColorManagerMock);
+        barChartScriptGenerator.setChartDataSource(chartDataSourceMock);
     }
 
     @Test
@@ -47,9 +47,9 @@ public class LineChartScriptGeneratorTest {
 
         }});
 
-        String chartScript = lineChartScriptGenerator.getChartScript(testChartDefinition);
+        String chartScript = barChartScriptGenerator.getChartScript(testChartDefinition);
         assertThat(chartScript, containsString("function load_test_chart()"));
-        assertThat(chartScript, containsString("type: 'line',"));
+        assertThat(chartScript, containsString("type: 'bar',"));
         assertThat(chartScript, containsString("label: 'Test Chart'"));
         assertThat(chartScript, containsString("data: [1,2]"));
         assertThat(chartScript, containsString("backgroundColor: " + TEST_COLOR));

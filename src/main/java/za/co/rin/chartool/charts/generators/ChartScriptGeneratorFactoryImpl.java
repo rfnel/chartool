@@ -11,6 +11,8 @@ public class ChartScriptGeneratorFactoryImpl implements ChartScriptGeneratorFact
     private PieChartScriptGenerator pieChartScriptGenerator;
     @Autowired
     private LineChartScriptGenerator lineChartScriptGenerator;
+    @Autowired
+    private BarChartScriptGenerator barChartScriptGenerator;
 
     @Override
     public ChartScriptGenerator getChartScriptGenerator(ChartDefinition chartDefinition) {
@@ -19,6 +21,8 @@ public class ChartScriptGeneratorFactoryImpl implements ChartScriptGeneratorFact
                 return pieChartScriptGenerator;
             case "LineChart":
                 return lineChartScriptGenerator;
+            case "BarChart":
+                return barChartScriptGenerator;
             default:
                 throw new IllegalArgumentException("No chart script generator found for type: " + chartDefinition.getType());
         }
@@ -30,5 +34,9 @@ public class ChartScriptGeneratorFactoryImpl implements ChartScriptGeneratorFact
 
     protected void setLineChartScriptGenerator(LineChartScriptGenerator lineChartScriptGenerator) {
         this.lineChartScriptGenerator = lineChartScriptGenerator;
+    }
+
+    protected void setBarChartScriptGenerator(BarChartScriptGenerator barChartScriptGenerator) {
+        this.barChartScriptGenerator = barChartScriptGenerator;
     }
 }

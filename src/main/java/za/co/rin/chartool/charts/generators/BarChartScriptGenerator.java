@@ -10,7 +10,7 @@ import za.co.rin.chartool.charts.json.KeyValueJsonWrapper;
 import java.util.List;
 
 @Component
-public class LineChartScriptGenerator implements ChartScriptGenerator {
+public class BarChartScriptGenerator implements ChartScriptGenerator {
 
     @Autowired
     private ChartDataSource chartDataSource;
@@ -18,7 +18,7 @@ public class LineChartScriptGenerator implements ChartScriptGenerator {
     @Autowired
     private ChartColorManager chartColorManager;
 
-    private static final String CHART_SCRIPT_TEMPLATE = "js_templates/line_chart.template";
+    private static final String CHART_SCRIPT_TEMPLATE = "js_templates/bar_chart.template";
 
     public String getChartScript(ChartDefinition chartDefinition) {
         return createChartScript(chartDefinition);
@@ -28,7 +28,7 @@ public class LineChartScriptGenerator implements ChartScriptGenerator {
         List<KeyValueDataItem> dataItems = chartDataSource.getKeyValueDataItems(chartDefinition);
         KeyValueJsonWrapper jsonWrapper = new KeyValueJsonWrapper(dataItems);
 
-        String colors = chartColorManager.getChartColorsJson(1);
+        String color = chartColorManager.getChartColorsJson(1);
 
         //TODO:  Encapsulate template logic in template class.
         String template = TemplateReader.getTemplate(CHART_SCRIPT_TEMPLATE);
@@ -37,7 +37,7 @@ public class LineChartScriptGenerator implements ChartScriptGenerator {
                 .replaceAll("\\$CHART_ID", chartDefinition.getId())
                 .replaceAll("\\$CHART_NAME", chartDefinition.getName())
                 .replaceAll("\\$DATASET_LABEL", chartDefinition.getName())
-                .replaceAll("\\$BACKGROUND_COLOR", colors)
+                .replaceAll("\\$BACKGROUND_COLOR", color)
                 .replaceAll("\\$DATA", jsonWrapper.getData())
                 .replaceAll("\\$LABELS", jsonWrapper.getLabels())
                 .replaceAll("\\$LOAD_FUNCTION", chartDefinition.getLoadFunction());

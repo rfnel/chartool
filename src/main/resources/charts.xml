@@ -25,5 +25,18 @@
                 GROUP BY MONTH(p.payment_date);
             </query>
         </Chart>
+        <Chart>
+            <id>actors</id>
+            <name>Most Popular Actors</name>
+            <description>Top 10 actors who have starred in the most films</description>
+            <type>BarChart</type>
+            <query>
+                SELECT CONCAT(first_name, ' ', last_name), COUNT(*)
+                FROM film_actor fa INNER JOIN actor a ON a.actor_id = fa.actor_id
+                GROUP BY CONCAT(first_name, ' ', last_name)
+                ORDER BY 2 DESC
+                LIMIT 10
+            </query>
+        </Chart>
     </Dashboard>
 </Charts>

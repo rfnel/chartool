@@ -1,5 +1,7 @@
 package za.co.rin.chartool.charts.config;
 
+import com.sun.rowset.internal.Row;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +13,9 @@ public class DashboardDefinition {
     private String description;
 
     private List<ChartDefinition> charts = new ArrayList<>();
+
+    //Used for layout.
+    private List<List<ChartDefinition>> chartsByRow = new ArrayList<>();
 
     public DashboardDefinition() {
     }
@@ -41,9 +46,23 @@ public class DashboardDefinition {
 
     public void addChart(ChartDefinition chart) {
         this.charts.add(chart);
+
+        List<ChartDefinition> chartsInRow;
+        if (this.charts.size() % 2 == 1) {
+            chartsInRow = new ArrayList<>();
+            chartsByRow.add(chartsInRow);
+        } else {
+            chartsInRow = chartsByRow.get(chartsByRow.size() - 1);
+        }
+
+        chartsInRow.add(chart);
     }
 
     public List<ChartDefinition> getCharts() {
-        return Collections.unmodifiableList(charts);
+        return charts;
+    }
+
+    public List<List<ChartDefinition>> getChartsByRow() {
+        return chartsByRow;
     }
 }
