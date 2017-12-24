@@ -8,6 +8,7 @@ function $LOAD_FUNCTION() {
     };
 
     options =  {
+        cutoutPercentage: 25,
         title: {
             display: true,
             text: '$CHART_NAME',

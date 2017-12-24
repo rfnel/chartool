@@ -22,7 +22,7 @@
                 <p class="lead" th:text="${dashboard.description}">Description</p>
             </div>
         </div>
-        <div id="js-charts" class="container">
+        <div id="js-charts" class="container-fluid">
             <div th:each="chartsByRow : ${dashboard.chartsByRow}" class="row pb-3">
                 <div th:each="chart : ${chartsByRow}"  class="col-sm-6">
                     <p>
