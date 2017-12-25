@@ -16,7 +16,7 @@ Chartool should always remain simple to use - a request to a URL should return a
 - Support for Chart.js charts containing multiple datasets.
 
 # Instructions
-This section provides instructions for building and running chartool.
+This section provides instructions for building and running Chartool.
 
 1.  Configure database connection properties in src\main\resources\application.yml.  The default connection connects to MySQL instance on localhost using test user credentials.
 2.  Configure the charts that you wish to display in src\main\resources\charts.xml.  The existing config defines examples for all supported chart types.  For line-, pie-, and bar charts, the SQL query should return two columns - a text label and a numeric value.  For scatter charts, the query should return two numeric values - one for each axis.
