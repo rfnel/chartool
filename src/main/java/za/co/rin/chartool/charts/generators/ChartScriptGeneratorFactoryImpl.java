@@ -13,6 +13,8 @@ public class ChartScriptGeneratorFactoryImpl implements ChartScriptGeneratorFact
     private LineChartScriptGenerator lineChartScriptGenerator;
     @Autowired
     private BarChartScriptGenerator barChartScriptGenerator;
+    @Autowired
+    private ScatterChartScriptGenerator scatterChartScriptGenerator;
 
     @Override
     public ChartScriptGenerator getChartScriptGenerator(ChartDefinition chartDefinition) {
@@ -23,6 +25,8 @@ public class ChartScriptGeneratorFactoryImpl implements ChartScriptGeneratorFact
                 return lineChartScriptGenerator;
             case "BarChart":
                 return barChartScriptGenerator;
+            case "ScatterChart":
+                return scatterChartScriptGenerator;
             default:
                 throw new IllegalArgumentException("No chart script generator found for type: " + chartDefinition.getType());
         }
@@ -38,5 +42,9 @@ public class ChartScriptGeneratorFactoryImpl implements ChartScriptGeneratorFact
 
     protected void setBarChartScriptGenerator(BarChartScriptGenerator barChartScriptGenerator) {
         this.barChartScriptGenerator = barChartScriptGenerator;
+    }
+
+    protected void setScatterChartScriptGenerator(ScatterChartScriptGenerator scatterChartScriptGenerator) {
+        this.scatterChartScriptGenerator = scatterChartScriptGenerator;
     }
 }

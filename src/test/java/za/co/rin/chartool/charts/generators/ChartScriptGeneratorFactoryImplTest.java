@@ -20,6 +20,7 @@ public class ChartScriptGeneratorFactoryImplTest {
         this.chartScriptGeneratorFactory.setPieChartScriptGenerator(new PieChartScriptGenerator());
         this.chartScriptGeneratorFactory.setLineChartScriptGenerator(new LineChartScriptGenerator());
         this.chartScriptGeneratorFactory.setBarChartScriptGenerator(new BarChartScriptGenerator());
+        this.chartScriptGeneratorFactory.setScatterChartScriptGenerator(new ScatterChartScriptGenerator());
     }
 
     @Test
@@ -39,11 +40,11 @@ public class ChartScriptGeneratorFactoryImplTest {
     }
 
     @Test
-    public void testGetChartGeneratorForBarChart() throws Exception {
-        ChartDefinition chartDefinition = getChartConfig("BarChart");
+    public void testGetChartGeneratorForScatterChart() throws Exception {
+        ChartDefinition chartDefinition = getChartConfig("ScatterChart");
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
-        assertThat(chartGenerator, is(Matchers.instanceOf(BarChartScriptGenerator.class)));
+        assertThat(chartGenerator, is(Matchers.instanceOf(ScatterChartScriptGenerator.class)));
     }
 
     private ChartDefinition getChartConfig(String type) {
