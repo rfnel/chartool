@@ -6,13 +6,14 @@ Chartool should always remain simple to use - a request to a URL should return a
 
 # Feature Wishlist 
 - User authentication/authorisation.
-- Templating engine for prettier dashboards.
+- ~~Templating engine for prettier dashboards.~~
 - Charts that refresh periodically.
 - Proper integration tests.
 - Support for additional chart types.
-- Prettier charting tool - perhaps JS charts on the front-end rather than images from the back-end.
+- ~~Prettier charting tool - perhaps JS charts on the front-end rather than images from the back-end.~~
 - User-configurable charts/dashboards that don't require redeploys.
 - Support for multiple data sources.
+- Support for Chart.js charts containing multiple datasets.
 
 # Instructions
 This section provides instructions for building and running chartool.
