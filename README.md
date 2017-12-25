@@ -14,6 +14,17 @@ Chartool should always remain simple to use - a request to a URL should return a
 - User-configurable charts/dashboards that don't require redeploys.
 - Support for multiple data sources.
 
+# Instructions
+This section provides instructions for building and running chartool.
+
+1.)  Configure database connection properties in src\main\resources\application.yml.  The default connection connects to MySQL instance on localhost using test user credentials.
+2.)  Configure the charts that you wish to display in src\main\resources\charts.xml.  The existing config defines examples for all supported chart types.  For line-, pie-, and bar charts, the SQL query should return two columns - a text label and a numeric value.  For scatter charts, the query should return two numeric values - one for each axis.
+3.)  Run ~~~~mvn clean install~~~~ in the root of the project directory.  The relevant config files will be included in the resulting JAR file.
+4.)  Run the JAR file in the target/ directory using ~~~java -jar chartool-0.1.jar~~~.  You can also copy the file to another location and run if from there if you wish.
+5.)  Navigate to http://localhost:8080/dashboard?id=sakila (replace 'sakila' with the name of any of your own dashboards, if you've configured anything).
+
+That's it!
+
 # Contributors
 If you do something, you can add your name - but never remove someone else's name.
 
