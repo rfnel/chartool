@@ -22,6 +22,8 @@ public class PieChartScriptGenerator implements ChartScriptGenerator {
     @Autowired
     private TemplateManager templateManager;
 
+    public static final int PIE_CHART_COLOR_OFFSET = 0;
+
     private static final String CHART_SCRIPT_TEMPLATE = "js_templates/pie_chart.template";
 
     public String getChartScript(ChartDefinition chartDefinition) {
@@ -32,7 +34,7 @@ public class PieChartScriptGenerator implements ChartScriptGenerator {
         List<KeyValueDataItem> dataItems = chartDataSource.getKeyValueDataItems(chartDefinition);
         KeyValueJsonWrapper jsonWrapper = new KeyValueJsonWrapper(dataItems);
 
-        String colors = chartColorManager.getChartColorsJson(dataItems.size());
+        String colors = chartColorManager.getChartColorsJson(PIE_CHART_COLOR_OFFSET, dataItems.size());
 
         ScriptTemplate template = templateManager.getScriptTemplate(CHART_SCRIPT_TEMPLATE);
 

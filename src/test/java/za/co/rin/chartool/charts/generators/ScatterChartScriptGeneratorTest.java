@@ -45,7 +45,7 @@ public class ScatterChartScriptGeneratorTest {
         context.checking(new Expectations() {{
             oneOf(chartDataSourceMock).getPointDataItems(testChartDefinition);
             will(returnValue(testDataItems));
-            oneOf(chartColorManagerMock).getChartColorsJson(1);
+            oneOf(chartColorManagerMock).getChartColorsJson(ScatterChartScriptGenerator.SCATTER_CHART_COLOR_OFFSET, 1);
             will(returnValue(TEST_COLOR));
 
         }});

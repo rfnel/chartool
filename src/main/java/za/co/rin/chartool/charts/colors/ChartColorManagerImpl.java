@@ -20,16 +20,21 @@ public class ChartColorManagerImpl implements ChartColorManager {
     }
 
     @Override
-    public String getChartColorsJson(int dataItemCount) {
+    public String getChartColorsJson(int colorOffset, int dataItemCount) {
         List<String> chartColors;
 
-        if (dataItemCount >= colors.size()) {
-            chartColors = colors;
+        if (dataItemCount <= colors.size() - colorOffset) {
+            chartColors = colors.subList(colorOffset, colorOffset + dataItemCount);
         } else {
-            chartColors = colors.subList(0, dataItemCount);
+            chartColors = colors;
         }
-        
+
         return String.join(",", chartColors);
+    }
+
+    @Override
+    public String getChartColorsJson(int dataItemCount) {
+        return getChartColorsJson(0,  dataItemCount);
     }
 
     private void loadColorsFromFile() {

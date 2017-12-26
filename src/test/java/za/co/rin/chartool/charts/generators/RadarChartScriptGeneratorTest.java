@@ -45,7 +45,7 @@ public class RadarChartScriptGeneratorTest {
         context.checking(new Expectations() {{
             oneOf(chartDataSourceMock).getKeyValueDataItems(testChartDefinition);
             will(returnValue(testDataItems));
-            oneOf(chartColorManagerMock).getChartColorsJson(2);
+            oneOf(chartColorManagerMock).getChartColorsJson(RadarChartScriptGenerator.RADAR_CHART_COLOR_OFFSET, 2);
             will(returnValue(TEST_COLORS));
 
         }});

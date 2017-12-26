@@ -45,7 +45,7 @@ public class LineChartScriptGeneratorTest {
         context.checking(new Expectations() {{
             oneOf(chartDataSourceMock).getKeyValueDataItems(testChartDefinition);
             will(returnValue(testDataItems));
-            oneOf(chartColorManagerMock).getChartColorsJson(1);
+            oneOf(chartColorManagerMock).getChartColorsJson(LineChartScriptGenerator.LINE_CHART_COLOR_OFFSET, 1);
             will(returnValue(TEST_COLOR));
 
         }});
