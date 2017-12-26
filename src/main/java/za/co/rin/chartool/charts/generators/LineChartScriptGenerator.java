@@ -2,10 +2,14 @@ package za.co.rin.chartool.charts.generators;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import za.co.rin.chartool.charts.colors.ChartColorManager;
 import za.co.rin.chartool.charts.config.ChartDefinition;
 import za.co.rin.chartool.charts.datasource.ChartDataSource;
 import za.co.rin.chartool.charts.datasource.KeyValueDataItem;
 import za.co.rin.chartool.charts.json.KeyValueJsonWrapper;
+import za.co.rin.chartool.charts.templates.KeyValueDatasetTemplateMapper;
+import za.co.rin.chartool.charts.templates.ScriptTemplate;
+import za.co.rin.chartool.charts.templates.TemplateManager;
 
 import java.util.List;
 
@@ -17,6 +21,8 @@ public class LineChartScriptGenerator implements ChartScriptGenerator {
 
     @Autowired
     private ChartColorManager chartColorManager;
+    @Autowired
+    private TemplateManager templateManager;
 
     private static final String CHART_SCRIPT_TEMPLATE = "js_templates/line_chart.template";
 
@@ -30,17 +36,17 @@ public class LineChartScriptGenerator implements ChartScriptGenerator {
 
         String colors = chartColorManager.getChartColorsJson(1);
 
-        //TODO:  Encapsulate template logic in template class.
-        String template = TemplateReader.getTemplate(CHART_SCRIPT_TEMPLATE);
+        ScriptTemplate scriptTemplate = templateManager.getScriptTemplate(CHART_SCRIPT_TEMPLATE);
 
-        return template
-                .replaceAll("\\$CHART_ID", chartDefinition.getId())
-                .replaceAll("\\$CHART_NAME", chartDefinition.getName())
-                .replaceAll("\\$DATASET_LABEL", chartDefinition.getLabel())
-                .replaceAll("\\$BACKGROUND_COLOR", colors)
-                .replaceAll("\\$DATA", jsonWrapper.getData())
-                .replaceAll("\\$LABELS", jsonWrapper.getLabels())
-                .replaceAll("\\$LOAD_FUNCTION", chartDefinition.getLoadFunction());
+        return scriptTemplate
+                .set("CHART_ID", chartDefinition.getId())
+                .set("CHART_NAME", chartDefinition.getName())
+                .set("BACKGROUND_COLOR", colors)
+                .set("DATASET_LABEL", chartDefinition.getLabel())
+                .set("DATA", jsonWrapper.getData())
+                .set("LABELS", jsonWrapper.getLabels())
+                .set("LOAD_FUNCTION", chartDefinition.getLoadFunction())
+                .toScriptText();
     }
 
     protected void setChartColorManager(ChartColorManager chartColorManager) {
@@ -49,5 +55,9 @@ public class LineChartScriptGenerator implements ChartScriptGenerator {
 
     protected void setChartDataSource(ChartDataSource chartDataSource) {
         this.chartDataSource = chartDataSource;
+    }
+
+    protected void setTemplateManager(TemplateManager templateManager) {
+        this.templateManager = templateManager;
     }
 }

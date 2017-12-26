@@ -1,7 +1,8 @@
-package za.co.rin.chartool.charts.generators;
+package za.co.rin.chartool.charts.colors;
 
 import org.junit.Before;
 import org.junit.Test;
+import za.co.rin.chartool.charts.colors.ChartColorManagerImpl;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

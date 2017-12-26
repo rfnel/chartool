@@ -54,10 +54,10 @@
         </Chart>
         <Chart>
             <id>category</id>
-            <name>Film Category</name>
-            <description>Total number of films by category</description>
+            <name>Film Ratings</name>
+            <description>Total number of films by rating</description>
             <type>RadarChart</type>
-            <label>Category</label>
+            <label>Ratings</label>
             <query>
                 SELECT c.name, COUNT(*)
                 FROM film_category fc INNER JOIN category c ON fc.category_id = c.category_id

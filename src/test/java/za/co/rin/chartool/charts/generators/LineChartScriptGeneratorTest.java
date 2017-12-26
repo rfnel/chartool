@@ -5,9 +5,11 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import za.co.rin.chartool.charts.colors.ChartColorManager;
 import za.co.rin.chartool.charts.config.ChartDefinition;
 import za.co.rin.chartool.charts.datasource.ChartDataSource;
 import za.co.rin.chartool.charts.datasource.KeyValueDataItem;
+import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class LineChartScriptGeneratorTest {
 
         lineChartScriptGenerator.setChartColorManager(chartColorManagerMock);
         lineChartScriptGenerator.setChartDataSource(chartDataSourceMock);
+        lineChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
     }
 
     @Test

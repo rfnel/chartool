@@ -1,0 +1,4 @@
+{
+    data: [$DATA],
+    backgroundColor: [$BACKGROUND_COLORS],
+}

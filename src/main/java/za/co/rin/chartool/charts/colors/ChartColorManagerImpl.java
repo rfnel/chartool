@@ -1,4 +1,4 @@
-package za.co.rin.chartool.charts.generators;
+package za.co.rin.chartool.charts.colors;
 
 import org.springframework.stereotype.Component;
 
@@ -34,7 +34,7 @@ public class ChartColorManagerImpl implements ChartColorManager {
 
     private void loadColorsFromFile() {
         colors = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(TemplateReader.class.getClassLoader().getResourceAsStream("colors/colors.txt")))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("colors/colors.txt")))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 colors.add("'" + line + "'");

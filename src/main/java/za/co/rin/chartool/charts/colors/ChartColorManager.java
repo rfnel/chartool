@@ -1,4 +1,4 @@
-package za.co.rin.chartool.charts.generators;
+package za.co.rin.chartool.charts.colors;
 
 public interface ChartColorManager {
 

@@ -5,10 +5,11 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import za.co.rin.chartool.charts.colors.ChartColorManager;
 import za.co.rin.chartool.charts.config.ChartDefinition;
 import za.co.rin.chartool.charts.datasource.ChartDataSource;
-import za.co.rin.chartool.charts.datasource.KeyValueDataItem;
 import za.co.rin.chartool.charts.datasource.PointDataItem;
+import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertThat;
 
 public class ScatterChartScriptGeneratorTest {
 
-    private ScatterChartScriptGenerator barChartScriptGenerator = new ScatterChartScriptGenerator();
+    private ScatterChartScriptGenerator scatterChartScriptGenerator = new ScatterChartScriptGenerator();
 
     private JUnit4Mockery context = new JUnit4Mockery();
     private ChartColorManager chartColorManagerMock;
@@ -31,8 +32,9 @@ public class ScatterChartScriptGeneratorTest {
         chartColorManagerMock = context.mock(ChartColorManager.class);
         chartDataSourceMock = context.mock(ChartDataSource.class);
 
-        barChartScriptGenerator.setChartColorManager(chartColorManagerMock);
-        barChartScriptGenerator.setChartDataSource(chartDataSourceMock);
+        scatterChartScriptGenerator.setChartColorManager(chartColorManagerMock);
+        scatterChartScriptGenerator.setChartDataSource(chartDataSourceMock);
+        scatterChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
     }
 
     @Test
@@ -48,7 +50,7 @@ public class ScatterChartScriptGeneratorTest {
 
         }});
 
-        String chartScript = barChartScriptGenerator.getChartScript(testChartDefinition);
+        String chartScript = scatterChartScriptGenerator.getChartScript(testChartDefinition);
         assertThat(chartScript, containsString("function load_test_chart()"));
         assertThat(chartScript, containsString("type: 'scatter',"));
         assertThat(chartScript, containsString("label: 'Test Chart Label'"));
