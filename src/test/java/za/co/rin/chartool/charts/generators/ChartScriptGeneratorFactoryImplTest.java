@@ -21,6 +21,7 @@ public class ChartScriptGeneratorFactoryImplTest {
         this.chartScriptGeneratorFactory.setLineChartScriptGenerator(new LineChartScriptGenerator());
         this.chartScriptGeneratorFactory.setBarChartScriptGenerator(new BarChartScriptGenerator());
         this.chartScriptGeneratorFactory.setScatterChartScriptGenerator(new ScatterChartScriptGenerator());
+        this.chartScriptGeneratorFactory.setRadarChartScriptGenerator(new RadarChartScriptGenerator());
     }
 
     @Test
@@ -45,6 +46,14 @@ public class ChartScriptGeneratorFactoryImplTest {
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
         assertThat(chartGenerator, is(Matchers.instanceOf(ScatterChartScriptGenerator.class)));
+    }
+
+    @Test
+    public void testGetChartGeneratorForRadarChart() throws Exception {
+        ChartDefinition chartDefinition = getChartConfig("RadarChart");
+        ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
+
+        assertThat(chartGenerator, is(Matchers.instanceOf(RadarChartScriptGenerator.class)));
     }
 
     private ChartDefinition getChartConfig(String type) {

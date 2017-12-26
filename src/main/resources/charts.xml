@@ -52,5 +52,17 @@
                 GROUP BY f.length, f.film_id
             </query>
         </Chart>
+        <Chart>
+            <id>category</id>
+            <name>Film Category</name>
+            <description>Total number of films by category</description>
+            <type>RadarChart</type>
+            <label>Category</label>
+            <query>
+                SELECT c.name, COUNT(*)
+                FROM film_category fc INNER JOIN category c ON fc.category_id = c.category_id
+                GROUP BY c.name;
+            </query>
+        </Chart>
     </Dashboard>
 </Charts>

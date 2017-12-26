@@ -1,0 +1,26 @@
+function $LOAD_FUNCTION() {
+    data = {
+       datasets: [{
+                label: '$DATASET_LABEL',
+                data: [$DATA],
+                backgroundColor: [$BACKGROUND_COLORS],
+        }],
+        labels: [$LABELS]
+    };
+
+    options =  {
+        cutoutPercentage: 25,
+        title: {
+            display: true,
+            text: '$CHART_NAME',
+            fontSize: 24
+        }
+    }
+
+    var ctx = document.getElementById("$CHART_ID").getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'radar',
+        data: data,
+        options: options
+    });
+}
