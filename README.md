@@ -7,7 +7,7 @@ Chartool should always remain simple to use - a request to a URL should return a
 # Feature Wishlist 
 - User authentication/authorisation.
 - ~~Templating engine for prettier dashboards.~~
-- Charts that refresh periodically.
+- ~~Charts that refresh periodically.~~
 - Proper integration tests.
 - Support for additional chart types.
 - ~~Prettier charting tool - perhaps JS charts on the front-end rather than images from the back-end.~~

@@ -45,7 +45,7 @@ public class PieChartScriptGeneratorTest {
         context.checking(new Expectations() {{
             oneOf(chartDataSourceMock).getKeyValueDataItems(testChartDefinition);
             will(returnValue(testDataItems));
-            oneOf(chartColorManagerMock).getChartColorsJson(PieChartScriptGenerator.PIE_CHART_COLOR_OFFSET, 2);
+            oneOf(chartColorManagerMock).getChartColorsJson(1, 2);
             will(returnValue(TEST_COLORS));
 
         }});
@@ -70,6 +70,7 @@ public class PieChartScriptGeneratorTest {
         chartDefinition.setId("test");
         chartDefinition.setName("Test Chart");
         chartDefinition.setDescription("Test Chart Description");
+        chartDefinition.setIndex(1);
 
         return chartDefinition;
     }

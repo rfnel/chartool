@@ -22,8 +22,6 @@ public class BarChartScriptGenerator implements ChartScriptGenerator {
     @Autowired
     private TemplateManager templateManager;
 
-    public static final int BAR_CHART_COLOR_OFFSET = 1;
-
     private static final String CHART_SCRIPT_TEMPLATE = "js_templates/bar_chart.template";
 
     public String getChartScript(ChartDefinition chartDefinition) {
@@ -34,7 +32,7 @@ public class BarChartScriptGenerator implements ChartScriptGenerator {
         List<KeyValueDataItem> dataItems = chartDataSource.getKeyValueDataItems(chartDefinition);
         KeyValueJsonWrapper jsonWrapper = new KeyValueJsonWrapper(dataItems);
 
-        String color = chartColorManager.getChartColorsJson(BAR_CHART_COLOR_OFFSET, 1);
+        String color = chartColorManager.getChartColorsJson(chartDefinition.getIndex(), 1);
 
         ScriptTemplate template = templateManager.getScriptTemplate(CHART_SCRIPT_TEMPLATE);
 

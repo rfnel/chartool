@@ -24,8 +24,6 @@ public class LineChartScriptGenerator implements ChartScriptGenerator {
     @Autowired
     private TemplateManager templateManager;
 
-    public static final int LINE_CHART_COLOR_OFFSET = 2;
-
     private static final String CHART_SCRIPT_TEMPLATE = "js_templates/line_chart.template";
 
     public String getChartScript(ChartDefinition chartDefinition) {
@@ -36,9 +34,11 @@ public class LineChartScriptGenerator implements ChartScriptGenerator {
         List<KeyValueDataItem> dataItems = chartDataSource.getKeyValueDataItems(chartDefinition);
         KeyValueJsonWrapper jsonWrapper = new KeyValueJsonWrapper(dataItems);
 
-        String colors = chartColorManager.getChartColorsJson(LINE_CHART_COLOR_OFFSET, 1);
+        String colors = chartColorManager.getChartColorsJson(chartDefinition.getIndex(), 1);
 
         ScriptTemplate scriptTemplate = templateManager.getScriptTemplate(CHART_SCRIPT_TEMPLATE);
+
+        //TODO:  Get data -> map datasets -> add datasets to report.
 
         return scriptTemplate
                 .set("CHART_ID", chartDefinition.getId())

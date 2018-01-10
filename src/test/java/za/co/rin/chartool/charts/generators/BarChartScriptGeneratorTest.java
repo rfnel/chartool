@@ -45,7 +45,7 @@ public class BarChartScriptGeneratorTest {
         context.checking(new Expectations() {{
             oneOf(chartDataSourceMock).getKeyValueDataItems(testChartDefinition);
             will(returnValue(testDataItems));
-            oneOf(chartColorManagerMock).getChartColorsJson(BarChartScriptGenerator.BAR_CHART_COLOR_OFFSET, 1);
+            oneOf(chartColorManagerMock).getChartColorsJson(1, 1);
             will(returnValue(TEST_COLOR));
 
         }});
@@ -72,6 +72,7 @@ public class BarChartScriptGeneratorTest {
         chartDefinition.setName("Test Chart");
         chartDefinition.setDescription("Test Chart Description");
         chartDefinition.setLabel("Test Chart Label");
+        chartDefinition.setIndex(1);
 
         return chartDefinition;
     }

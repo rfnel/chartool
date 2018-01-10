@@ -59,8 +59,11 @@ public class DashboardManagerImpl implements DashboardManager {
         dashboardDefinition.setName(dashboard.getName());
         dashboardDefinition.setDescription(dashboard.getDescription());
 
+        int index = 0;
+
         for (Chart chart : dashboard.getChart()) {
             ChartDefinition chartDefinition = loadChartDefinition(chart);
+            chartDefinition.setIndex(index++);
 
             dashboardDefinition.addChart(chartDefinition);
         }

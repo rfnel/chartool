@@ -22,8 +22,6 @@ public class RadarChartScriptGenerator implements ChartScriptGenerator {
     @Autowired
     private TemplateManager templateManager;
 
-    public static final int RADAR_CHART_COLOR_OFFSET = 4;
-
     private static final String CHART_SCRIPT_TEMPLATE = "js_templates/radar_chart.template";
 
     public String getChartScript(ChartDefinition chartDefinition) {
@@ -34,7 +32,7 @@ public class RadarChartScriptGenerator implements ChartScriptGenerator {
         List<KeyValueDataItem> dataItems = chartDataSource.getKeyValueDataItems(chartDefinition);
         KeyValueJsonWrapper jsonWrapper = new KeyValueJsonWrapper(dataItems);
 
-        String colors = chartColorManager.getChartColorsJson(RADAR_CHART_COLOR_OFFSET, dataItems.size());
+        String colors = chartColorManager.getChartColorsJson(chartDefinition.getIndex(), dataItems.size());
 
         ScriptTemplate template = templateManager.getScriptTemplate(CHART_SCRIPT_TEMPLATE);
 

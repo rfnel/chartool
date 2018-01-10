@@ -22,8 +22,6 @@ public class ScatterChartScriptGenerator implements ChartScriptGenerator {
     @Autowired
     private TemplateManager templateManager;
 
-    public static final int SCATTER_CHART_COLOR_OFFSET = 3;
-
     private static final String CHART_SCRIPT_TEMPLATE = "js_templates/scatter_chart.template";
 
     public String getChartScript(ChartDefinition chartDefinition) {
@@ -34,9 +32,8 @@ public class ScatterChartScriptGenerator implements ChartScriptGenerator {
         List<PointDataItem> dataItems = chartDataSource.getPointDataItems(chartDefinition);
         PointJsonWrapper jsonWrapper = new PointJsonWrapper(dataItems);
 
-        String color = chartColorManager.getChartColorsJson(SCATTER_CHART_COLOR_OFFSET, 1);
+        String color = chartColorManager.getChartColorsJson(chartDefinition.getIndex(), 1);
 
-        //TODO:  Encapsulate template logic in template class.
         ScriptTemplate template = templateManager.getScriptTemplate(CHART_SCRIPT_TEMPLATE);
 
         return template

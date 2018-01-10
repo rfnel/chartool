@@ -9,6 +9,8 @@ public class ChartDefinition {
     private String label;
     private String query;
 
+    private int index;
+
     private String loadFunction;
 
     public ChartDefinition() {
@@ -60,6 +62,14 @@ public class ChartDefinition {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getLoadFunction() {
