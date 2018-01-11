@@ -1,6 +1,6 @@
 package za.co.rin.chartool.charts.datasource;
 
-public class PointDataItem implements DataItem {
+public class PointDataItem {
 
     private final Number x;
     private final Number y;
@@ -16,10 +16,5 @@ public class PointDataItem implements DataItem {
 
     public Number getY() {
         return y;
-    }
-
-    @Override
-    public String getDataSetLabel() {
-        return null;
     }
 }

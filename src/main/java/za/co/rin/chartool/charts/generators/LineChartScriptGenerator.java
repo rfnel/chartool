@@ -7,7 +7,6 @@ import za.co.rin.chartool.charts.config.ChartDefinition;
 import za.co.rin.chartool.charts.datasource.ChartDataSource;
 import za.co.rin.chartool.charts.datasource.KeyValueDataItem;
 import za.co.rin.chartool.charts.json.KeyValueJsonWrapper;
-import za.co.rin.chartool.charts.templates.KeyValueDatasetTemplateMapper;
 import za.co.rin.chartool.charts.templates.ScriptTemplate;
 import za.co.rin.chartool.charts.templates.TemplateManager;
 

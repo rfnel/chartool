@@ -41,6 +41,22 @@
             </query>
         </Chart>
         <Chart>
+            <id>actors_rating</id>
+            <name>Most Popular Actors by Rating</name>
+            <description>Actors who have starred in the most films by rating</description>
+            <type>MultiDatasetBarChart</type>
+            <label>Number of films</label>
+            <query>
+                SELECT f.rating, CONCAT(first_name, ' ', last_name), COUNT(*)
+                FROM film_actor fa INNER JOIN actor a ON a.actor_id = fa.actor_id
+                INNER JOIN film f ON f.film_id = fa.film_id
+                WHERE rating IN ('G', 'PG')
+                GROUP BY CONCAT(first_name, ' ', last_name), f.rating
+                ORDER BY 2 DESC
+                LIMIT 10
+            </query>
+        </Chart>
+        <Chart>
             <id>actors_length</id>
             <name>Number of Actors vs. Film Length</name>
             <description>Number of actors in films compared to the length of the films</description>

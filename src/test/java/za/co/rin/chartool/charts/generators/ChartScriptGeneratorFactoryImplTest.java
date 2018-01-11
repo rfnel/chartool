@@ -20,6 +20,7 @@ public class ChartScriptGeneratorFactoryImplTest {
         this.chartScriptGeneratorFactory.setPieChartScriptGenerator(new PieChartScriptGenerator());
         this.chartScriptGeneratorFactory.setLineChartScriptGenerator(new LineChartScriptGenerator());
         this.chartScriptGeneratorFactory.setBarChartScriptGenerator(new BarChartScriptGenerator());
+        this.chartScriptGeneratorFactory.setMultiDatasetBarChartScriptGenerator(new MultiDatasetBarChartScriptGenerator());
         this.chartScriptGeneratorFactory.setScatterChartScriptGenerator(new ScatterChartScriptGenerator());
         this.chartScriptGeneratorFactory.setRadarChartScriptGenerator(new RadarChartScriptGenerator());
     }
@@ -38,6 +39,22 @@ public class ChartScriptGeneratorFactoryImplTest {
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
         assertThat(chartGenerator, is(Matchers.instanceOf(LineChartScriptGenerator.class)));
+    }
+
+    @Test
+    public void testGetChartGeneratorForBarChart() throws Exception {
+        ChartDefinition chartDefinition = getChartConfig("BarChart");
+        ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
+
+        assertThat(chartGenerator, is(Matchers.instanceOf(BarChartScriptGenerator.class)));
+    }
+
+    @Test
+    public void testGetChartGeneratorForMultiDatasetBarChart() throws Exception {
+        ChartDefinition chartDefinition = getChartConfig("MultiDatasetBarChart");
+        ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
+
+        assertThat(chartGenerator, is(Matchers.instanceOf(MultiDatasetBarChartScriptGenerator.class)));
     }
 
     @Test

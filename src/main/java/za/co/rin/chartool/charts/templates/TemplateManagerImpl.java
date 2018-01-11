@@ -20,13 +20,6 @@ public class TemplateManagerImpl implements TemplateManager {
         return new ScriptTemplate(templateText);
     }
 
-    @Override
-    public DatasetTemplate getDatasetTemplate(String path) {
-        String templateText = getTemplate(path);
-
-        return new DatasetTemplate(templateText);
-    }
-
     private String getTemplate(String path) {
         String templateText = this.cachedTemplates.get(path);
 

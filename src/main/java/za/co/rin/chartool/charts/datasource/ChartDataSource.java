@@ -7,5 +7,6 @@ import java.util.List;
 public interface ChartDataSource {
 
     List<KeyValueDataItem> getKeyValueDataItems(ChartDefinition chartDefinition);
+    List<LabeledKeyValueDataItem> getLabeledKeyValueDataItems(ChartDefinition chartDefinition);
     List<PointDataItem> getPointDataItems(ChartDefinition chartDefinition);
 }

@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import za.co.rin.chartool.charts.config.ChartDefinition;
 
-import java.awt.*;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -21,6 +20,20 @@ public class JdbcChartDataSource implements ChartDataSource {
             KeyValueDataItem dataItem = new KeyValueDataItem(resultSet.getString(1), resultSet.getDouble(2));
 
             return dataItem;
+        });
+
+        return dataItems;
+    }
+
+    @Override
+    public List<LabeledKeyValueDataItem> getLabeledKeyValueDataItems(ChartDefinition chartDefinition) {
+        List<LabeledKeyValueDataItem> dataItems = jdbcTemplate.query(chartDefinition.getQuery(), (ResultSet resultSet, int i) -> {
+            String label = resultSet.getString(1);
+            KeyValueDataItem dataItem = new KeyValueDataItem(resultSet.getString(2), resultSet.getDouble(3));
+
+            LabeledKeyValueDataItem labeledDataItem = new LabeledKeyValueDataItem(label, dataItem);
+
+            return labeledDataItem;
         });
 
         return dataItems;

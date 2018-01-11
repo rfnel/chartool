@@ -1,0 +1,21 @@
+function $LOAD_FUNCTION() {
+    data = {
+        datasets: [$DATASETS],
+       labels: [$LABELS]
+    };
+
+    options =  {
+          title: {
+              display: true,
+              text: '$CHART_NAME',
+              fontSize: 24
+          }
+      }
+
+    var ctx = document.getElementById("$CHART_ID").getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options
+    });
+}

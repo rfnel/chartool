@@ -8,8 +8,12 @@ public class ScriptTemplate {
         this.text = text;
     }
 
+    public ScriptTemplate newInstance() {
+        return new ScriptTemplate(this.text);
+    }
+
     public ScriptTemplate set(String field, String value) {
-        this.text = this.text.replaceAll("\\$" + field, value);
+        this.text = this.text.replace("$" + field, value);
 
         return this;
     }
