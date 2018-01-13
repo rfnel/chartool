@@ -1,7 +1,7 @@
 function $LOAD_FUNCTION() {
     data = {
         datasets: [$DATASETS],
-       labels: [$LABELS]
+        labels: [$LABELS]
     };
 
     options =  {

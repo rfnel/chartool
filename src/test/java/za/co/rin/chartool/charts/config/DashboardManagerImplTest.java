@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import za.co.rin.chartool.generated.Chart;
 import za.co.rin.chartool.generated.Charts;
 import za.co.rin.chartool.generated.Dashboard;
 

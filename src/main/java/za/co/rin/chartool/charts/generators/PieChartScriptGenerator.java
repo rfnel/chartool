@@ -14,7 +14,6 @@ import za.co.rin.chartool.charts.templates.TemplateManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class PieChartScriptGenerator implements ChartScriptGenerator {
@@ -57,12 +56,11 @@ public class PieChartScriptGenerator implements ChartScriptGenerator {
         List<Dataset<KeyValueDataItem>> datasets = chartData.getDatasets();
         for (int i = 0; i < datasets.size(); i++) {
             Dataset<KeyValueDataItem> dataset = datasets.get(i);
-            List<Number> values = dataset.getDataItems().stream().map(dataItem -> dataItem.getValue()).collect(Collectors.toList());
 
             String datasetJson = datasetTemplate
                     .newInstance()
                     .set("DATASET_LABEL", dataset.getDatasetLabel())
-                    .set("DATA", JsonUtil.valuesToJsonList(values))
+                    .set("DATA", JsonUtil.valuesToJsonList(dataset.getDataItems()))
                     .set("BACKGROUND_COLORS", colorManager.getChartColorsJson(chartDefinition.getIndex() + i, dataset.size()))
                     .toScriptText();
 

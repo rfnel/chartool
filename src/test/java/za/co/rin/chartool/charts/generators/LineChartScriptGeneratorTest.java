@@ -13,9 +13,6 @@ import za.co.rin.chartool.charts.data.Dataset;
 import za.co.rin.chartool.charts.data.KeyValueDataItem;
 import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -78,12 +75,12 @@ public class LineChartScriptGeneratorTest {
         return chartDefinition;
     }
 
-    private ChartData getTestData() {
+    private ChartData<KeyValueDataItem> getTestData() {
         Dataset<KeyValueDataItem> dataset = new Dataset<>("Test Chart Label");
         dataset.addDataItem(new KeyValueDataItem("One", 1));
         dataset.addDataItem(new KeyValueDataItem("Two", 2));
 
-        ChartData chartData = new ChartData();
+        ChartData<KeyValueDataItem> chartData = new ChartData<>();
         chartData.addDataset(dataset);
 
         chartData.addLabel("One");

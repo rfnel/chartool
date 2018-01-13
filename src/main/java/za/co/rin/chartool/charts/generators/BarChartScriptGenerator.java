@@ -14,7 +14,6 @@ import za.co.rin.chartool.charts.templates.TemplateManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class BarChartScriptGenerator implements ChartScriptGenerator {
@@ -56,12 +55,12 @@ public class BarChartScriptGenerator implements ChartScriptGenerator {
         ScriptTemplate datasetTemplate = templateManager.getScriptTemplate(CHART_DATASET_TEMPLATE);
         List<Dataset<KeyValueDataItem>> datasets = chartData.getDatasets();
         for (int i = 0; i < datasets.size(); i++) {
-            List<Number> values = datasets.get(i).getDataItems().stream().map(dataItem -> dataItem.getValue()).collect(Collectors.toList());
+            Dataset<KeyValueDataItem> dataset = datasets.get(i);
 
             String datasetJson = datasetTemplate
                     .newInstance()
-                    .set("DATASET_LABEL", datasets.get(i).getDatasetLabel())
-                    .set("DATA", JsonUtil.valuesToJsonList(values))
+                    .set("DATASET_LABEL", dataset.getDatasetLabel())
+                    .set("DATA", JsonUtil.valuesToJsonList(dataset.getDataItems()))
                     .set("BACKGROUND_COLOR", colorManager.getChartColorsJson(chartDefinition.getIndex() + i, 1))
                     .toScriptText();
 

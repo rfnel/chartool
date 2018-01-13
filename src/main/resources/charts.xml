@@ -61,14 +61,14 @@
         </Chart>
         <Chart>
             <id>actors_length</id>
-            <name>Number of Actors vs. Film Length</name>
-            <description>Number of actors in films compared to the length of the films</description>
+            <name>Ratings - Number of Actors vs. Film Length</name>
+            <description>Number of actors in films compared to the length of the films by rating</description>
             <type>ScatterChart</type>
             <label>Actors vs. Length</label>
             <query>
-                SELECT f.length, COUNT(*)
+                SELECT f.rating, f.length, COUNT(*)
                 FROM film f INNER JOIN film_actor fa ON fa.film_id = f.film_id
-                GROUP BY f.length, f.film_id
+                GROUP BY f.rating, f.length, f.film_id
             </query>
         </Chart>
         <Chart>

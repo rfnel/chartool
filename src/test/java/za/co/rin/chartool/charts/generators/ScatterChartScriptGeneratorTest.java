@@ -7,12 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import za.co.rin.chartool.charts.colors.ChartColorManager;
 import za.co.rin.chartool.charts.config.ChartDefinition;
-import za.co.rin.chartool.charts.data.ChartDataSource;
-import za.co.rin.chartool.charts.data.PointDataItem;
+import za.co.rin.chartool.charts.data.*;
 import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -32,7 +28,7 @@ public class ScatterChartScriptGeneratorTest {
         chartColorManagerMock = context.mock(ChartColorManager.class);
         chartDataSourceMock = context.mock(ChartDataSource.class);
 
-        scatterChartScriptGenerator.setChartColorManager(chartColorManagerMock);
+        scatterChartScriptGenerator.setColorManager(chartColorManagerMock);
         scatterChartScriptGenerator.setChartDataSource(chartDataSourceMock);
         scatterChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
     }
@@ -40,11 +36,11 @@ public class ScatterChartScriptGeneratorTest {
     @Test
     public void testGetChartScript() throws Exception {
         ChartDefinition testChartDefinition = getTestChartDefinition();
-        List<PointDataItem> testDataItems = getTestDataItems();
+        ChartData<PointDataItem> testData = getTestDataItems();
 
         context.checking(new Expectations() {{
-            oneOf(chartDataSourceMock).getPointDataItems(testChartDefinition);
-            will(returnValue(testDataItems));
+            oneOf(chartDataSourceMock).getPointDatasets(testChartDefinition);
+            will(returnValue(testData));
             oneOf(chartColorManagerMock).getChartColorsJson(1, 1);
             will(returnValue(TEST_COLOR));
 
@@ -77,12 +73,14 @@ public class ScatterChartScriptGeneratorTest {
         return chartDefinition;
     }
 
-    private List<PointDataItem> getTestDataItems() {
-        List<PointDataItem> dataItems = new ArrayList<>();
+    private ChartData<PointDataItem> getTestDataItems() {
+        Dataset<PointDataItem> dataset = new Dataset<>("Test Chart Label");
+        dataset.addDataItem(new PointDataItem(1, 2));
+        dataset.addDataItem(new PointDataItem(2, 1));
 
-        dataItems.add(new PointDataItem(1, 2));
-        dataItems.add(new PointDataItem(2, 1));
+        ChartData<PointDataItem> chartData = new ChartData();
+        chartData.addDataset(dataset);
 
-        return dataItems;
+        return chartData;
     }
 }

@@ -1,5 +1,8 @@
 package za.co.rin.chartool.charts.json;
 
+import za.co.rin.chartool.charts.data.KeyValueDataItem;
+import za.co.rin.chartool.charts.data.PointDataItem;
+
 import java.util.List;
 
 public class JsonUtil {
@@ -18,13 +21,28 @@ public class JsonUtil {
         return json.toString();
     }
 
-    public static String valuesToJsonList(List<Number> values) {
+    public static String valuesToJsonList(List<KeyValueDataItem> values) {
         StringBuilder json = new StringBuilder();
 
         for (int i = 0; i < values.size(); i++) {
-            json.append(values.get(i));
+            json.append(values.get(i).getValue());
 
             if (i < values.size() - 1) {
+                json.append(",");
+            }
+        }
+
+        return json.toString();
+    }
+
+    public static String pointsToJsonList(List<PointDataItem> dataItems) {
+        StringBuilder json = new StringBuilder();
+
+        for (int i = 0; i < dataItems.size(); i++) {
+            PointDataItem pointDataItem = dataItems.get(i);
+            json.append("{x: " + pointDataItem.getX() + ", y: " + pointDataItem.getY() + "}");
+
+            if (i < dataItems.size() - 1) {
                 json.append(",");
             }
         }

@@ -1,9 +1,6 @@
 package za.co.rin.chartool.charts.config;
 
-import com.sun.rowset.internal.Row;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class DashboardDefinition {

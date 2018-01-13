@@ -1,0 +1,5 @@
+{
+    label: '$DATASET_LABEL',
+    data: [$DATA],
+    backgroundColor: $BACKGROUND_COLOR,
+}

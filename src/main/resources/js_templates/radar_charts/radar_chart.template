@@ -1,6 +1,6 @@
 function $LOAD_FUNCTION() {
     data = {
-       datasets: [$DATASETS],
+        datasets: [$DATASETS],
         labels: [$LABELS]
     };
 
