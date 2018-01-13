@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import za.co.rin.chartool.charts.colors.ChartColorManager;
 import za.co.rin.chartool.charts.config.ChartDefinition;
+import za.co.rin.chartool.charts.data.ChartData;
 import za.co.rin.chartool.charts.data.ChartDataSource;
+import za.co.rin.chartool.charts.data.Dataset;
 import za.co.rin.chartool.charts.data.KeyValueDataItem;
 import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 
@@ -32,7 +34,7 @@ public class LineChartScriptGeneratorTest {
         chartColorManagerMock = context.mock(ChartColorManager.class);
         chartDataSourceMock = context.mock(ChartDataSource.class);
 
-        lineChartScriptGenerator.setChartColorManager(chartColorManagerMock);
+        lineChartScriptGenerator.setColorManager(chartColorManagerMock);
         lineChartScriptGenerator.setChartDataSource(chartDataSourceMock);
         lineChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
     }
@@ -40,11 +42,11 @@ public class LineChartScriptGeneratorTest {
     @Test
     public void testGetChartScript() throws Exception {
         ChartDefinition testChartDefinition = getTestChartDefinition();
-        List<KeyValueDataItem> testDataItems = getTestDataItems();
+        ChartData testData = getTestData();
 
         context.checking(new Expectations() {{
-            oneOf(chartDataSourceMock).getKeyValueDataItems(testChartDefinition);
-            will(returnValue(testDataItems));
+            oneOf(chartDataSourceMock).getKeyValueDatasets(testChartDefinition);
+            will(returnValue(testData));
             oneOf(chartColorManagerMock).getChartColorsJson(1, 1);
             will(returnValue(TEST_COLOR));
 
@@ -71,18 +73,22 @@ public class LineChartScriptGeneratorTest {
         chartDefinition.setId("test");
         chartDefinition.setName("Test Chart");
         chartDefinition.setDescription("Test Chart Description");
-        chartDefinition.setLabel("Test Chart Label");
         chartDefinition.setIndex(1);
 
         return chartDefinition;
     }
 
-    private List<KeyValueDataItem> getTestDataItems() {
-        List<KeyValueDataItem> dataItems = new ArrayList<>();
+    private ChartData getTestData() {
+        Dataset<KeyValueDataItem> dataset = new Dataset<>("Test Chart Label");
+        dataset.addDataItem(new KeyValueDataItem("One", 1));
+        dataset.addDataItem(new KeyValueDataItem("Two", 2));
 
-        dataItems.add(new KeyValueDataItem("One", 1));
-        dataItems.add(new KeyValueDataItem("Two", 2));
+        ChartData chartData = new ChartData();
+        chartData.addDataset(dataset);
 
-        return dataItems;
+        chartData.addLabel("One");
+        chartData.addLabel("Two");
+
+        return chartData;
     }
 }

@@ -1,10 +1,6 @@
 function $LOAD_FUNCTION() {
     data = {
-       datasets: [{
-                label: '$DATASET_LABEL',
-                data: [$DATA],
-                backgroundColor: [$BACKGROUND_COLORS],
-        }],
+       datasets: [$DATASETS],
         labels: [$LABELS]
     };
 

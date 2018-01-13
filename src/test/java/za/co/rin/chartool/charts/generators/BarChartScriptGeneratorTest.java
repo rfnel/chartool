@@ -52,7 +52,7 @@ public class BarChartScriptGeneratorTest {
         String chartScript = barChartScriptGenerator.getChartScript(testChartDefinition);
         assertThat(chartScript, containsString("function load_test_chart()"));
         assertThat(chartScript, containsString("type: 'bar',"));
-        assertThat(chartScript, containsString("label: '1'"));
+        assertThat(chartScript, containsString("label: 'Test Chart Label'"));
         assertThat(chartScript, containsString("data: [1,2]"));
         assertThat(chartScript, containsString("backgroundColor: " + TEST_COLOR));
         assertThat(chartScript, containsString(" document.getElementById(\"test\")"));
@@ -77,11 +77,7 @@ public class BarChartScriptGeneratorTest {
     }
 
     private ChartData getTestData() {
-        List<KeyValueDataItem> dataItems = new ArrayList<>();
-
-        dataItems.add(new KeyValueDataItem("Two", 2));
-
-        Dataset<KeyValueDataItem> dataset = new Dataset<>("1");
+        Dataset<KeyValueDataItem> dataset = new Dataset<>("Test Chart Label");
         dataset.addDataItem(new KeyValueDataItem("One", 1));
         dataset.addDataItem(new KeyValueDataItem("Two", 2));
 

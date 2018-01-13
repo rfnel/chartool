@@ -9,7 +9,7 @@
             <description>Total number of films by rating</description>
             <type>PieChart</type>
             <query>
-                SELECT f.rating, COUNT(*)
+                SELECT 'Ratings', f.rating, COUNT(*)
                 FROM film f
                 GROUP BY f.rating
             </query>
@@ -19,11 +19,14 @@
             <name>Payments by Month</name>
             <description>Total of payment amounts during different months of the year</description>
             <type>LineChart</type>
-            <label>Payment amount in USD</label>
             <query>
-                SELECT MONTH(p.payment_date), SUM(amount)
+                SELECT 'USD', MONTH(p.payment_date), SUM(amount)
                 FROM sakila.payment p
-                GROUP BY MONTH(p.payment_date);
+                GROUP BY MONTH(p.payment_date)
+                UNION
+                SELECT 'Estimated ZAR', MONTH(p.payment_date), SUM(amount)*13
+                FROM sakila.payment p
+                GROUP BY MONTH(p.payment_date)
             </query>
         </Chart>
         <Chart>
@@ -44,7 +47,7 @@
             <id>actors_rating</id>
             <name>Most Popular Actors by Rating</name>
             <description>Actors who have starred in the most films by rating</description>
-            <type>MultiDatasetBarChart</type>
+            <type>BarChart</type>
             <label>Number of films</label>
             <query>
                 SELECT f.rating, CONCAT(first_name, ' ', last_name), COUNT(*)
@@ -75,9 +78,10 @@
             <type>RadarChart</type>
             <label>Number of films</label>
             <query>
-                SELECT c.name, COUNT(*)
+                SELECT f.rating, c.name, COUNT(*)
                 FROM film_category fc INNER JOIN category c ON fc.category_id = c.category_id
-                GROUP BY c.name;
+                INNER JOIN film f ON f.film_id = fc.film_id
+                GROUP BY f.rating, c.name;
             </query>
         </Chart>
     </Dashboard>

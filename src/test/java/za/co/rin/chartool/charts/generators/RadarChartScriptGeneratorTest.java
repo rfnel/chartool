@@ -7,12 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 import za.co.rin.chartool.charts.colors.ChartColorManager;
 import za.co.rin.chartool.charts.config.ChartDefinition;
+import za.co.rin.chartool.charts.data.ChartData;
 import za.co.rin.chartool.charts.data.ChartDataSource;
+import za.co.rin.chartool.charts.data.Dataset;
 import za.co.rin.chartool.charts.data.KeyValueDataItem;
 import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -25,14 +24,14 @@ public class RadarChartScriptGeneratorTest {
     private ChartColorManager chartColorManagerMock;
     private ChartDataSource chartDataSourceMock;
 
-    private static final String TEST_COLORS = "'rgba(0, 0, 139, 0.5)', 'rgba(54, 162, 235, 0.5)'";
+    private static final String TEST_COLOR = "'rgba(0, 0, 139, 0.5)'";
 
     @Before
     public void setUp() {
         chartColorManagerMock = context.mock(ChartColorManager.class);
         chartDataSourceMock = context.mock(ChartDataSource.class);
 
-        radarChartScriptGenerator.setChartColorManager(chartColorManagerMock);
+        radarChartScriptGenerator.setColorManager(chartColorManagerMock);
         radarChartScriptGenerator.setChartDataSource(chartDataSourceMock);
         radarChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
     }
@@ -40,13 +39,13 @@ public class RadarChartScriptGeneratorTest {
     @Test
     public void testGetChartScript() throws Exception {
         ChartDefinition testChartDefinition = getTestChartDefinition();
-        List<KeyValueDataItem> testDataItems = getTestDataItems();
+        ChartData testData = getTestData();
 
         context.checking(new Expectations() {{
-            oneOf(chartDataSourceMock).getKeyValueDataItems(testChartDefinition);
-            will(returnValue(testDataItems));
-            oneOf(chartColorManagerMock).getChartColorsJson(1, 2);
-            will(returnValue(TEST_COLORS));
+            oneOf(chartDataSourceMock).getKeyValueDatasets(testChartDefinition);
+            will(returnValue(testData));
+            oneOf(chartColorManagerMock).getChartColorsJson(1, 1);
+            will(returnValue(TEST_COLOR));
 
         }});
 
@@ -55,7 +54,7 @@ public class RadarChartScriptGeneratorTest {
         assertThat(chartScript, containsString("type: 'radar',"));
         assertThat(chartScript, containsString("label: 'Test Chart Label'"));
         assertThat(chartScript, containsString("data: [1,2]"));
-        assertThat(chartScript, containsString("backgroundColor: [" + TEST_COLORS + "]"));
+        assertThat(chartScript, containsString("backgroundColor: " + TEST_COLOR));
         assertThat(chartScript, containsString(" document.getElementById(\"test\")"));
         assertThat(chartScript, containsString("text: 'Test Chart',"));
 
@@ -71,18 +70,22 @@ public class RadarChartScriptGeneratorTest {
         chartDefinition.setId("test");
         chartDefinition.setName("Test Chart");
         chartDefinition.setDescription("Test Chart Description");
-        chartDefinition.setLabel("Test Chart Label");
         chartDefinition.setIndex(1);
 
         return chartDefinition;
     }
 
-    private List<KeyValueDataItem> getTestDataItems() {
-        List<KeyValueDataItem> dataItems = new ArrayList<>();
+    private ChartData getTestData() {
+        Dataset<KeyValueDataItem> dataset = new Dataset<>("Test Chart Label");
+        dataset.addDataItem(new KeyValueDataItem("One", 1));
+        dataset.addDataItem(new KeyValueDataItem("Two", 2));
 
-        dataItems.add(new KeyValueDataItem("One", 1));
-        dataItems.add(new KeyValueDataItem("Two", 2));
+        ChartData chartData = new ChartData();
+        chartData.addDataset(dataset);
 
-        return dataItems;
+        chartData.addLabel("One");
+        chartData.addLabel("Two");
+
+        return chartData;
     }
 }

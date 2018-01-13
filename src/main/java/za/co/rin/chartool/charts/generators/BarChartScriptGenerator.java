@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import za.co.rin.chartool.charts.colors.ChartColorManager;
 import za.co.rin.chartool.charts.config.ChartDefinition;
-import za.co.rin.chartool.charts.data.*;
+import za.co.rin.chartool.charts.data.ChartData;
+import za.co.rin.chartool.charts.data.ChartDataSource;
+import za.co.rin.chartool.charts.data.Dataset;
+import za.co.rin.chartool.charts.data.KeyValueDataItem;
 import za.co.rin.chartool.charts.json.JsonUtil;
 import za.co.rin.chartool.charts.templates.ScriptTemplate;
 import za.co.rin.chartool.charts.templates.TemplateManager;
@@ -23,8 +26,8 @@ public class BarChartScriptGenerator implements ChartScriptGenerator {
     @Autowired
     private ChartColorManager colorManager;
 
-    private static final String CHART_SCRIPT_TEMPLATE = "js_templates/multi_dataset_bar_chart.template";
-    private static final String CHART_DATASET_TEMPLATE = "js_templates/dataset_templates/bar_chart_dataset.template";
+    private static final String CHART_SCRIPT_TEMPLATE = "js_templates/bar_charts/bar_chart.template";
+    private static final String CHART_DATASET_TEMPLATE = "js_templates/bar_charts/bar_chart_dataset.template";
 
     public String getChartScript(ChartDefinition chartDefinition) {
         return createChartScript(chartDefinition);

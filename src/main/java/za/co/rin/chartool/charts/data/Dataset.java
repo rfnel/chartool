@@ -24,4 +24,8 @@ public class Dataset<T> {
     public List<T> getDataItems() {
         return Collections.unmodifiableList(dataItems);
     }
+
+    public int size() {
+        return dataItems.size();
+    }
 }
