@@ -4,8 +4,8 @@ import java.util.*;
 
 public class ChartData<T> {
 
-    private List<Dataset<T>> datasets = new ArrayList<>();
-    private Set<String> labels = new HashSet<>();
+    private final List<Dataset<T>> datasets = new ArrayList<>();
+    private final Set<String> labels = new HashSet<>();
 
     public ChartData() {
     }

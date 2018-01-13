@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Dataset<T> {
 
-    private String datasetLabel;
-    private List<T> dataItems = new ArrayList<>();
+    private final String datasetLabel;
+    private final List<T> dataItems = new ArrayList<>();
 
     public Dataset(String datasetLabel) {
         this.datasetLabel = datasetLabel;

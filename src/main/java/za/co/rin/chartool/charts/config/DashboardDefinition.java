@@ -9,10 +9,10 @@ public class DashboardDefinition {
     private String name;
     private String description;
 
-    private List<ChartDefinition> charts = new ArrayList<>();
+    private final List<ChartDefinition> charts = new ArrayList<>();
 
     //Used for layout.
-    private List<List<ChartDefinition>> chartsByRow = new ArrayList<>();
+    private final List<List<ChartDefinition>> chartsByRow = new ArrayList<>();
 
     public DashboardDefinition() {
     }

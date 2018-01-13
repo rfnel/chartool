@@ -28,10 +28,10 @@ public class JdbcChartDataSource implements ChartDataSource {
         return jdbcTemplate.query(chartDefinition.getQuery(), new PointResultSetExtractor());
     }
 
-    private static class KeyValueResultSetExtractor implements ResultSetExtractor<ChartData> {
+    private static class KeyValueResultSetExtractor implements ResultSetExtractor<ChartData<KeyValueDataItem>> {
 
         @Override
-        public ChartData extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+        public ChartData<KeyValueDataItem> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
             ChartData<KeyValueDataItem> chartData = new ChartData<>();
 
             Map<String, Dataset<KeyValueDataItem>> datasetMap = new HashMap<>();
@@ -60,10 +60,10 @@ public class JdbcChartDataSource implements ChartDataSource {
         }
     }
 
-    private static class PointResultSetExtractor implements ResultSetExtractor<ChartData> {
+    private static class PointResultSetExtractor implements ResultSetExtractor<ChartData<PointDataItem>> {
 
         @Override
-        public ChartData extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+        public ChartData<PointDataItem> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
             ChartData<PointDataItem> chartData = new ChartData<>();
 
             Map<String, Dataset<PointDataItem>> datasetMap = new HashMap<>();

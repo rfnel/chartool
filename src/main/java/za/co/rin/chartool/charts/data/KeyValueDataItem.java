@@ -1,6 +1,5 @@
 package za.co.rin.chartool.charts.data;
 
-
 public class KeyValueDataItem {
 
     private final String key;

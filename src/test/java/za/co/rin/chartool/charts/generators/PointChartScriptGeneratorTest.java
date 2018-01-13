@@ -78,7 +78,7 @@ public class PointChartScriptGeneratorTest {
         dataset.addDataItem(new PointDataItem(1, 2));
         dataset.addDataItem(new PointDataItem(2, 1));
 
-        ChartData<PointDataItem> chartData = new ChartData();
+        ChartData<PointDataItem> chartData = new ChartData<>();
         chartData.addDataset(dataset);
 
         return chartData;
