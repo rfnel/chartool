@@ -14,6 +14,7 @@ Chartool should always remain simple to use - a request to a URL should return a
 - User-configurable charts/dashboards that don't require redeploys.
 - Support for multiple data sources.
 - ~~Support for Chart.js charts containing multiple datasets~~.
+- 'Big' and 'Small' chart options in XML to change size of charts on UI (either full page width or half of the page).
 
 # Instructions
 This section provides instructions for building and running Chartool.

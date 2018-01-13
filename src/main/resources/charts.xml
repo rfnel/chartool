@@ -34,7 +34,6 @@
             <name>Most Popular Actors</name>
             <description>Top 10 actors who have starred in the most films</description>
             <type>BarChart</type>
-            <label>Number of films</label>
             <query>
                 SELECT 'Film count', CONCAT(first_name, ' ', last_name), COUNT(*)
                 FROM film_actor fa INNER JOIN actor a ON a.actor_id = fa.actor_id
@@ -48,7 +47,6 @@
             <name>Most Popular Actors by Rating</name>
             <description>Actors who have starred in the most films by rating</description>
             <type>BarChart</type>
-            <label>Number of films</label>
             <query>
                 SELECT f.rating, CONCAT(first_name, ' ', last_name), COUNT(*)
                 FROM film_actor fa INNER JOIN actor a ON a.actor_id = fa.actor_id
@@ -61,14 +59,13 @@
         </Chart>
         <Chart>
             <id>actors_length</id>
-            <name>Ratings - Number of Actors vs. Film Length</name>
-            <description>Number of actors in films compared to the length of the films by rating</description>
+            <name>Number of Actors vs. Film Length</name>
+            <description>Number of actors in films compared to the length of the films</description>
             <type>ScatterChart</type>
-            <label>Actors vs. Length</label>
             <query>
-                SELECT f.rating, f.length, COUNT(*)
+                SELECT 'Actors vs. Length', f.length, COUNT(*)
                 FROM film f INNER JOIN film_actor fa ON fa.film_id = f.film_id
-                GROUP BY f.rating, f.length, f.film_id
+                GROUP BY f.length, f.film_id
             </query>
         </Chart>
         <Chart>
@@ -76,7 +73,6 @@
             <name>Films by Category</name>
             <description>Total number of films by category</description>
             <type>RadarChart</type>
-            <label>Number of films</label>
             <query>
                 SELECT f.rating, c.name, COUNT(*)
                 FROM film_category fc INNER JOIN category c ON fc.category_id = c.category_id

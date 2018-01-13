@@ -8,7 +8,6 @@
             <name>Test Chart 1</name>
             <description>Test Chart 1 Description</description>
             <type>PieChart</type>
-            <label>Test Chart 1 Label</label>
             <query>SELECT * FROM TEST1;</query>
         </Chart>
         <Chart>
@@ -16,7 +15,6 @@
             <name>Test Chart 2</name>
             <description>Test Chart 2 Description</description>
             <type>PieChart</type>
-            <label>Test Chart 2 Label</label>
             <query>SELECT * FROM TEST2;</query>
         </Chart>
     </Dashboard>

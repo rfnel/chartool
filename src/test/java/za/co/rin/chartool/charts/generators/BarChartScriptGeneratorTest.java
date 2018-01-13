@@ -67,7 +67,6 @@ public class BarChartScriptGeneratorTest {
         chartDefinition.setId("test");
         chartDefinition.setName("Test Chart");
         chartDefinition.setDescription("Test Chart Description");
-        chartDefinition.setLabel("Test Chart Label");
         chartDefinition.setIndex(1);
 
         return chartDefinition;
