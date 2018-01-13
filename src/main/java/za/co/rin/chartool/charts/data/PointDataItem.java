@@ -1,4 +1,4 @@
-package za.co.rin.chartool.charts.datasource;
+package za.co.rin.chartool.charts.data;
 
 public class PointDataItem {
 

@@ -33,7 +33,7 @@
             <type>BarChart</type>
             <label>Number of films</label>
             <query>
-                SELECT CONCAT(first_name, ' ', last_name), COUNT(*)
+                SELECT 'Film count', CONCAT(first_name, ' ', last_name), COUNT(*)
                 FROM film_actor fa INNER JOIN actor a ON a.actor_id = fa.actor_id
                 GROUP BY CONCAT(first_name, ' ', last_name)
                 ORDER BY 2 DESC

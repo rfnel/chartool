@@ -1,6 +1,6 @@
 package za.co.rin.chartool.charts.json;
 
-import za.co.rin.chartool.charts.datasource.PointDataItem;
+import za.co.rin.chartool.charts.data.PointDataItem;
 import java.util.List;
 
 public class PointJsonWrapper {

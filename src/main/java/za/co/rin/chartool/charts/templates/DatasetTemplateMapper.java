@@ -1,6 +1,6 @@
 package za.co.rin.chartool.charts.templates;
 
-import za.co.rin.chartool.charts.datasource.KeyValueDataItem;
+import za.co.rin.chartool.charts.data.KeyValueDataItem;
 
 import java.util.List;
 

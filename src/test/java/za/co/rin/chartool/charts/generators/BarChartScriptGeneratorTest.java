@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import za.co.rin.chartool.charts.colors.ChartColorManager;
 import za.co.rin.chartool.charts.config.ChartDefinition;
-import za.co.rin.chartool.charts.datasource.ChartDataSource;
-import za.co.rin.chartool.charts.datasource.KeyValueDataItem;
+import za.co.rin.chartool.charts.data.*;
 import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 
 import java.util.ArrayList;
@@ -32,19 +31,19 @@ public class BarChartScriptGeneratorTest {
         chartColorManagerMock = context.mock(ChartColorManager.class);
         chartDataSourceMock = context.mock(ChartDataSource.class);
 
-        barChartScriptGenerator.setChartColorManager(chartColorManagerMock);
         barChartScriptGenerator.setChartDataSource(chartDataSourceMock);
+        barChartScriptGenerator.setColorManager(chartColorManagerMock);
         barChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
     }
 
     @Test
     public void testGetChartScript() throws Exception {
         ChartDefinition testChartDefinition = getTestChartDefinition();
-        List<KeyValueDataItem> testDataItems = getTestDataItems();
+        ChartData testData = getTestData();
 
         context.checking(new Expectations() {{
-            oneOf(chartDataSourceMock).getKeyValueDataItems(testChartDefinition);
-            will(returnValue(testDataItems));
+            oneOf(chartDataSourceMock).getKeyValueDatasets(testChartDefinition);
+            will(returnValue(testData));
             oneOf(chartColorManagerMock).getChartColorsJson(1, 1);
             will(returnValue(TEST_COLOR));
 
@@ -53,7 +52,7 @@ public class BarChartScriptGeneratorTest {
         String chartScript = barChartScriptGenerator.getChartScript(testChartDefinition);
         assertThat(chartScript, containsString("function load_test_chart()"));
         assertThat(chartScript, containsString("type: 'bar',"));
-        assertThat(chartScript, containsString("label: 'Test Chart Label'"));
+        assertThat(chartScript, containsString("label: '1'"));
         assertThat(chartScript, containsString("data: [1,2]"));
         assertThat(chartScript, containsString("backgroundColor: " + TEST_COLOR));
         assertThat(chartScript, containsString(" document.getElementById(\"test\")"));
@@ -77,12 +76,21 @@ public class BarChartScriptGeneratorTest {
         return chartDefinition;
     }
 
-    private List<KeyValueDataItem> getTestDataItems() {
+    private ChartData getTestData() {
         List<KeyValueDataItem> dataItems = new ArrayList<>();
 
-        dataItems.add(new KeyValueDataItem("One", 1));
         dataItems.add(new KeyValueDataItem("Two", 2));
 
-        return dataItems;
+        Dataset<KeyValueDataItem> dataset = new Dataset<>("1");
+        dataset.addDataItem(new KeyValueDataItem("One", 1));
+        dataset.addDataItem(new KeyValueDataItem("Two", 2));
+
+        ChartData chartData = new ChartData();
+        chartData.addDataset(dataset);
+
+        chartData.addLabel("One");
+        chartData.addLabel("Two");
+
+        return chartData;
     }
 }
