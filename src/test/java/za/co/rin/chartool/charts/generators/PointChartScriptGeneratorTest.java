@@ -13,9 +13,9 @@ import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class ScatterChartScriptGeneratorTest {
+public class PointChartScriptGeneratorTest {
 
-    private ScatterChartScriptGenerator scatterChartScriptGenerator = new ScatterChartScriptGenerator();
+    private PointChartScriptGenerator pointChartScriptGenerator = new PointChartScriptGenerator();
 
     private JUnit4Mockery context = new JUnit4Mockery();
     private ChartColorManager chartColorManagerMock;
@@ -28,9 +28,9 @@ public class ScatterChartScriptGeneratorTest {
         chartColorManagerMock = context.mock(ChartColorManager.class);
         chartDataSourceMock = context.mock(ChartDataSource.class);
 
-        scatterChartScriptGenerator.setColorManager(chartColorManagerMock);
-        scatterChartScriptGenerator.setChartDataSource(chartDataSourceMock);
-        scatterChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
+        pointChartScriptGenerator.setColorManager(chartColorManagerMock);
+        pointChartScriptGenerator.setChartDataSource(chartDataSourceMock);
+        pointChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class ScatterChartScriptGeneratorTest {
 
         }});
 
-        String chartScript = scatterChartScriptGenerator.getChartScript(testChartDefinition);
+        String chartScript = pointChartScriptGenerator.getChartScript(testChartDefinition);
         assertThat(chartScript, containsString("function load_test_chart()"));
         assertThat(chartScript, containsString("type: 'scatter',"));
         assertThat(chartScript, containsString("label: 'Test Chart Label'"));
@@ -66,6 +66,7 @@ public class ScatterChartScriptGeneratorTest {
         ChartDefinition chartDefinition = new ChartDefinition();
         chartDefinition.setId("test");
         chartDefinition.setName("Test Chart");
+        chartDefinition.setType("ScatterChart");
         chartDefinition.setDescription("Test Chart Description");
         chartDefinition.setIndex(1);
 

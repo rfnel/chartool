@@ -16,28 +16,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class BarChartScriptGenerator implements ChartScriptGenerator {
+public class KeyValueChartScriptGenerator implements ChartScriptGenerator {
 
     @Autowired
     private ChartDataSource chartDataSource;
     @Autowired
-    private TemplateManager templateManager;
-    @Autowired
     private ChartColorManager colorManager;
+    @Autowired
+    private TemplateManager templateManager;
 
-    private static final String CHART_SCRIPT_TEMPLATE = "js_templates/bar_charts/bar_chart.template";
-    private static final String CHART_DATASET_TEMPLATE = "js_templates/bar_charts/bar_chart_dataset.template";
-
+    @Override
     public String getChartScript(ChartDefinition chartDefinition) {
         return createChartScript(chartDefinition);
     }
 
     private String createChartScript(ChartDefinition chartDefinition) {
+        ChartSettings chartSettings = ChartSettings.getSettings(chartDefinition);
         ChartData<KeyValueDataItem> chartData = chartDataSource.getKeyValueDatasets(chartDefinition);
 
-        ScriptTemplate template = templateManager.getScriptTemplate(CHART_SCRIPT_TEMPLATE);
+        ScriptTemplate template = templateManager.getScriptTemplate(chartSettings.getChartScriptTemplate());
 
-        String datasets = mapDataSets(chartDefinition, chartData);
+        String datasets = mapDataSets(chartDefinition, chartSettings, chartData);
         String labels = JsonUtil.stringsToJsonList(chartData.getLabels());
 
         return template
@@ -49,10 +48,10 @@ public class BarChartScriptGenerator implements ChartScriptGenerator {
                 .toScriptText();
     }
 
-    private String mapDataSets(ChartDefinition chartDefinition, ChartData<KeyValueDataItem> chartData) {
+    private String mapDataSets(ChartDefinition chartDefinition, ChartSettings chartSettings, ChartData<KeyValueDataItem> chartData) {
         List<String> jsonDataSets = new ArrayList<>();
 
-        ScriptTemplate datasetTemplate = templateManager.getScriptTemplate(CHART_DATASET_TEMPLATE);
+        ScriptTemplate datasetTemplate = templateManager.getScriptTemplate(chartSettings.getChartDatasetTemplate());
         List<Dataset<KeyValueDataItem>> datasets = chartData.getDatasets();
         for (int i = 0; i < datasets.size(); i++) {
             Dataset<KeyValueDataItem> dataset = datasets.get(i);
@@ -61,7 +60,7 @@ public class BarChartScriptGenerator implements ChartScriptGenerator {
                     .newInstance()
                     .set("DATASET_LABEL", dataset.getDatasetLabel())
                     .set("DATA", JsonUtil.valuesToJsonList(dataset.getDataItems()))
-                    .set("BACKGROUND_COLOR", colorManager.getChartColorsJson(chartDefinition.getIndex() + i, 1))
+                    .set("BACKGROUND_COLOR", colorManager.getChartColorsJson(chartDefinition.getIndex() + i, getChartColorCount(chartSettings, dataset)))
                     .toScriptText();
 
             jsonDataSets.add(datasetJson);
@@ -70,15 +69,26 @@ public class BarChartScriptGenerator implements ChartScriptGenerator {
         return String.join(",", jsonDataSets);
     }
 
+    private int getChartColorCount(ChartSettings chartSettings, Dataset<KeyValueDataItem> dataset) {
+        switch (chartSettings.getColorStrategy()) {
+            case SINGLE_COLOR:
+                return 1;
+            case MULTIPLE_COLORS:
+                return dataset.size();
+            default:
+                throw new IllegalArgumentException("Unhandled color strategy: " + chartSettings.getColorStrategy());
+        }
+    }
+
+    protected void setColorManager(ChartColorManager colorManager) {
+        this.colorManager = colorManager;
+    }
+
     protected void setChartDataSource(ChartDataSource chartDataSource) {
         this.chartDataSource = chartDataSource;
     }
 
     protected void setTemplateManager(TemplateManager templateManager) {
         this.templateManager = templateManager;
-    }
-
-    protected void setColorManager(ChartColorManager colorManager) {
-        this.colorManager = colorManager;
     }
 }

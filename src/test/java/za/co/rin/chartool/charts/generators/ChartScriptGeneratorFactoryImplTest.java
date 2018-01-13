@@ -17,11 +17,10 @@ public class ChartScriptGeneratorFactoryImplTest {
     public void setUp() {
         this.chartScriptGeneratorFactory  = new ChartScriptGeneratorFactoryImpl();
 
-        this.chartScriptGeneratorFactory.setPieChartScriptGenerator(new PieChartScriptGenerator());
-        this.chartScriptGeneratorFactory.setLineChartScriptGenerator(new LineChartScriptGenerator());
-        this.chartScriptGeneratorFactory.setBarChartScriptGenerator(new BarChartScriptGenerator());
-        this.chartScriptGeneratorFactory.setScatterChartScriptGenerator(new ScatterChartScriptGenerator());
-        this.chartScriptGeneratorFactory.setRadarChartScriptGenerator(new RadarChartScriptGenerator());
+        KeyValueChartScriptGenerator keyValueChartScriptGenerator = new KeyValueChartScriptGenerator();
+
+        this.chartScriptGeneratorFactory.setKeyValueChartScriptGenerator(keyValueChartScriptGenerator);
+        this.chartScriptGeneratorFactory.setPointChartScriptGenerator(new PointChartScriptGenerator());
     }
 
     @Test
@@ -29,7 +28,7 @@ public class ChartScriptGeneratorFactoryImplTest {
         ChartDefinition chartDefinition = getChartConfig("PieChart");
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
-        assertThat(chartGenerator, is(instanceOf(PieChartScriptGenerator.class)));
+        assertThat(chartGenerator, is(instanceOf(KeyValueChartScriptGenerator.class)));
     }
 
     @Test
@@ -37,7 +36,7 @@ public class ChartScriptGeneratorFactoryImplTest {
         ChartDefinition chartDefinition = getChartConfig("LineChart");
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
-        assertThat(chartGenerator, is(Matchers.instanceOf(LineChartScriptGenerator.class)));
+        assertThat(chartGenerator, is(Matchers.instanceOf(KeyValueChartScriptGenerator.class)));
     }
 
     @Test
@@ -45,7 +44,7 @@ public class ChartScriptGeneratorFactoryImplTest {
         ChartDefinition chartDefinition = getChartConfig("BarChart");
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
-        assertThat(chartGenerator, is(Matchers.instanceOf(BarChartScriptGenerator.class)));
+        assertThat(chartGenerator, is(Matchers.instanceOf(KeyValueChartScriptGenerator.class)));
     }
 
     @Test
@@ -53,7 +52,7 @@ public class ChartScriptGeneratorFactoryImplTest {
         ChartDefinition chartDefinition = getChartConfig("ScatterChart");
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
-        assertThat(chartGenerator, is(Matchers.instanceOf(ScatterChartScriptGenerator.class)));
+        assertThat(chartGenerator, is(Matchers.instanceOf(PointChartScriptGenerator.class)));
     }
 
     @Test
@@ -61,7 +60,7 @@ public class ChartScriptGeneratorFactoryImplTest {
         ChartDefinition chartDefinition = getChartConfig("RadarChart");
         ChartScriptGenerator chartGenerator = chartScriptGeneratorFactory.getChartScriptGenerator(chartDefinition);
 
-        assertThat(chartGenerator, is(Matchers.instanceOf(RadarChartScriptGenerator.class)));
+        assertThat(chartGenerator, is(Matchers.instanceOf(KeyValueChartScriptGenerator.class)));
     }
 
     private ChartDefinition getChartConfig(String type) {

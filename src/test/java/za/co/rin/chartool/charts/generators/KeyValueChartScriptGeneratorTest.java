@@ -16,9 +16,9 @@ import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class LineChartScriptGeneratorTest {
+public class KeyValueChartScriptGeneratorTest {
 
-    private LineChartScriptGenerator lineChartScriptGenerator = new LineChartScriptGenerator();
+    private KeyValueChartScriptGenerator keyValueChartScriptGenerator = new KeyValueChartScriptGenerator();
 
     private JUnit4Mockery context = new JUnit4Mockery();
     private ChartColorManager chartColorManagerMock;
@@ -31,9 +31,9 @@ public class LineChartScriptGeneratorTest {
         chartColorManagerMock = context.mock(ChartColorManager.class);
         chartDataSourceMock = context.mock(ChartDataSource.class);
 
-        lineChartScriptGenerator.setColorManager(chartColorManagerMock);
-        lineChartScriptGenerator.setChartDataSource(chartDataSourceMock);
-        lineChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
+        keyValueChartScriptGenerator.setColorManager(chartColorManagerMock);
+        keyValueChartScriptGenerator.setChartDataSource(chartDataSourceMock);
+        keyValueChartScriptGenerator.setTemplateManager(new TemplateManagerImpl());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class LineChartScriptGeneratorTest {
 
         }});
 
-        String chartScript = lineChartScriptGenerator.getChartScript(testChartDefinition);
+        String chartScript = keyValueChartScriptGenerator.getChartScript(testChartDefinition);
         assertThat(chartScript, containsString("function load_test_chart()"));
         assertThat(chartScript, containsString("type: 'line',"));
         assertThat(chartScript, containsString("label: 'Test Chart Label'"));
@@ -69,6 +69,7 @@ public class LineChartScriptGeneratorTest {
         ChartDefinition chartDefinition = new ChartDefinition();
         chartDefinition.setId("test");
         chartDefinition.setName("Test Chart");
+        chartDefinition.setType("LineChart");
         chartDefinition.setDescription("Test Chart Description");
         chartDefinition.setIndex(1);
 
