@@ -6,11 +6,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 import za.co.rin.chartool.charts.config.ChartDefinition;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 @Component
 public class JdbcChartDataSource implements ChartDataSource {
@@ -34,9 +33,8 @@ public class JdbcChartDataSource implements ChartDataSource {
         public ChartData<KeyValueDataItem> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
             ChartData<KeyValueDataItem> chartData = new ChartData<>();
 
-            Map<String, Dataset<KeyValueDataItem>> datasetMap = new HashMap<>();
+            Map<String, List<KeyValueDataItem>> dataMap = new HashMap<>();
 
-            //TODO:  Consider moving this logic into ChartData class.
             while (resultSet.next()) {
                 String datasetLabel = resultSet.getString(1);
                 String dataItemLabel = resultSet.getString(2);
@@ -44,20 +42,39 @@ public class JdbcChartDataSource implements ChartDataSource {
 
                 KeyValueDataItem dataItem = new KeyValueDataItem(dataItemLabel, dataItemValue);
 
-                Dataset<KeyValueDataItem> dataset = datasetMap.get(datasetLabel);
-                if (dataset == null) {
-                    dataset = new Dataset<>(datasetLabel);
+                List<KeyValueDataItem> dataItemList = dataMap.get(datasetLabel);
+                if (dataItemList == null) {
+                    dataItemList = new ArrayList<>();
 
-                    datasetMap.put(datasetLabel, dataset);
-                    chartData.addDataset(dataset);
+                    dataMap.put(datasetLabel, dataItemList);
                 }
 
-                dataset.addDataItem(dataItem);
+                dataItemList.add(dataItem);
                 chartData.addLabel(dataItemLabel);
+            }
+
+            for (String dataSetLabel : dataMap.keySet()) {
+                List<KeyValueDataItem> standardizedDataset = standardizeDataset(chartData.getLabels(), dataMap.get(dataSetLabel));
+
+                chartData.addDataset(new Dataset<>(dataSetLabel, standardizedDataset));
             }
 
             return chartData;
         }
+
+        private List<KeyValueDataItem> standardizeDataset(List<String> labels, List<KeyValueDataItem> dataItems) {
+            KeyValueDataItem[] standardizedDataItems = new KeyValueDataItem[labels.size()];
+
+            for (KeyValueDataItem dataItem : dataItems) {
+                standardizedDataItems[labels.indexOf(dataItem.getKey())] = dataItem;
+            }
+
+            return Arrays.asList(standardizedDataItems);
+        }
+
+        //TODO:  Standardize data here.
+        //First, get all labels.
+        //Then, for each data set, add each item at index corresponding to label.
     }
 
     private static class PointResultSetExtractor implements ResultSetExtractor<ChartData<PointDataItem>> {
@@ -66,9 +83,8 @@ public class JdbcChartDataSource implements ChartDataSource {
         public ChartData<PointDataItem> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
             ChartData<PointDataItem> chartData = new ChartData<>();
 
-            Map<String, Dataset<PointDataItem>> datasetMap = new HashMap<>();
+            Map<String, List<PointDataItem>> dataMap = new HashMap<>();
 
-            //TODO:  Consider moving this logic into ChartData class.
             while (resultSet.next()) {
                 String datasetLabel = resultSet.getString(1);
                 double dataItemX = resultSet.getDouble(2);
@@ -76,15 +92,12 @@ public class JdbcChartDataSource implements ChartDataSource {
 
                 PointDataItem dataItem = new PointDataItem(dataItemX, dataItemY);
 
-                Dataset<PointDataItem> dataset = datasetMap.get(datasetLabel);
-                if (dataset == null) {
-                    dataset = new Dataset<>(datasetLabel);
+                List<PointDataItem> dataItemList = dataMap.get(datasetLabel);
+                if (dataItemList == null) {
+                    dataItemList = new ArrayList<>();
 
-                    datasetMap.put(datasetLabel, dataset);
-                    chartData.addDataset(dataset);
+                    dataMap.put(datasetLabel, dataItemList);
                 }
-
-                dataset.addDataItem(dataItem);
             }
 
             return chartData;
