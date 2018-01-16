@@ -1,20 +1,16 @@
 package za.co.rin.chartool.charts.data;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Dataset<T> {
 
     private final String datasetLabel;
-    private final List<T> dataItems = new ArrayList<>();
+    private final List<T> dataItems;
 
-    public Dataset(String datasetLabel) {
+    public Dataset(String datasetLabel, List<T> dataItems) {
         this.datasetLabel = datasetLabel;
-    }
-
-    public void addDataItem(T dataItem) {
-        this.dataItems.add(dataItem);
+        this.dataItems = dataItems;
     }
 
     public String getDatasetLabel() {
