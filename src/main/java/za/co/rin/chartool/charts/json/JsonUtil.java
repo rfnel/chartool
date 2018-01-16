@@ -25,7 +25,11 @@ public class JsonUtil {
         StringBuilder json = new StringBuilder();
 
         for (int i = 0; i < values.size(); i++) {
-            json.append(values.get(i).getValue());
+            if (values.get(i) != null) {
+                json.append(values.get(i).getValue());
+            } else {
+                json.append(0);
+            }
 
             if (i < values.size() - 1) {
                 json.append(",");
