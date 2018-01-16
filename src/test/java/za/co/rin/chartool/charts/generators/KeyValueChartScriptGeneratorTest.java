@@ -13,6 +13,9 @@ import za.co.rin.chartool.charts.data.Dataset;
 import za.co.rin.chartool.charts.data.KeyValueDataItem;
 import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -77,9 +80,11 @@ public class KeyValueChartScriptGeneratorTest {
     }
 
     private ChartData<KeyValueDataItem> getTestData() {
-        Dataset<KeyValueDataItem> dataset = new Dataset<>("Test Chart Label");
-        dataset.addDataItem(new KeyValueDataItem("One", 1));
-        dataset.addDataItem(new KeyValueDataItem("Two", 2));
+        List<KeyValueDataItem> dataItems = new ArrayList<>();
+        dataItems.add(new KeyValueDataItem("One", 1));
+        dataItems.add(new KeyValueDataItem("Two", 2));
+
+        Dataset<KeyValueDataItem> dataset = new Dataset<>("Test Chart Label", dataItems);
 
         ChartData<KeyValueDataItem> chartData = new ChartData<>();
         chartData.addDataset(dataset);
