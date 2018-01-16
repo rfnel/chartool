@@ -10,6 +10,9 @@ import za.co.rin.chartool.charts.config.ChartDefinition;
 import za.co.rin.chartool.charts.data.*;
 import za.co.rin.chartool.charts.templates.TemplateManagerImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -74,9 +77,11 @@ public class PointChartScriptGeneratorTest {
     }
 
     private ChartData<PointDataItem> getTestDataItems() {
-        Dataset<PointDataItem> dataset = new Dataset<>("Test Chart Label");
-        dataset.addDataItem(new PointDataItem(1, 2));
-        dataset.addDataItem(new PointDataItem(2, 1));
+        List<PointDataItem> dataItems = new ArrayList<>();
+        dataItems.add(new PointDataItem(1, 2));
+        dataItems.add(new PointDataItem(2, 1));
+
+        Dataset<PointDataItem> dataset = new Dataset<>("Test Chart Label", dataItems);
 
         ChartData<PointDataItem> chartData = new ChartData<>();
         chartData.addDataset(dataset);
