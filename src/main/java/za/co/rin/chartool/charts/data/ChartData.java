@@ -5,7 +5,7 @@ import java.util.*;
 public class ChartData<T> {
 
     private final List<Dataset<T>> datasets = new ArrayList<>();
-    private final Set<String> labels = new HashSet<>();
+    private final Set<String> labels = new LinkedHashSet<>();
 
     public ChartData() {
     }
