@@ -27,6 +27,13 @@ This section provides instructions for building and running Chartool.
 
 That's it!
 
+# XML Changes
+If you make any changes to the XML schema that Chartool uses for chart config, you'll have to run the xjc command to regenerate the JABX objects.  See below.
+
+```xjc "<project directory path>\charts.xsd" -p za.co.rin.chartool.generated -d generated```
+
+(I usually just let xjc dump the generated classes somewhere on disk, then manually copy them into the project.)
+
 # Contributors
 If you do something, you can add your name - but never remove someone else's name.
 
