@@ -13,6 +13,7 @@
                 FROM film f
                 GROUP BY f.rating
             </query>
+            <datasource>db-main</datasource>
         </Chart>
         <Chart>
             <id>payments</id>
@@ -28,6 +29,7 @@
                 FROM sakila.payment p
                 GROUP BY MONTH(p.payment_date)
             </query>
+            <datasource>db-main</datasource>
         </Chart>
         <Chart>
             <id>actors</id>
@@ -41,6 +43,7 @@
                 ORDER BY 2 DESC
                 LIMIT 10
             </query>
+            <datasource>db-main</datasource>
         </Chart>
         <Chart>
             <id>actors_rating</id>
@@ -56,6 +59,7 @@
                 ORDER BY 2 DESC
                 LIMIT 10
             </query>
+            <datasource>db-main</datasource>
         </Chart>
         <Chart>
             <id>actors_length</id>
@@ -67,6 +71,7 @@
                 FROM film f INNER JOIN film_actor fa ON fa.film_id = f.film_id
                 GROUP BY f.length, f.film_id
             </query>
+            <datasource>db-main</datasource>
         </Chart>
         <Chart>
             <id>category</id>
@@ -79,6 +84,33 @@
                 INNER JOIN film f ON f.film_id = fc.film_id
                 GROUP BY f.rating, c.name;
             </query>
+            <datasource>db-main</datasource>
         </Chart>
+        <Chart>
+            <id>country_languages</id>
+            <name>Cities by country</name>
+            <description>Cities grouped by the country in which they are</description>
+            <type>PieChart</type>
+            <query>
+                SELECT "CountryCode", countrycode, count(*) from city group by countrycode LIMIT 5;
+            </query>
+            <datasource>db-world</datasource>
+        </Chart>
+        <!--<Chart>-->
+            <!--<id>actors_rating_2</id>-->
+            <!--<name>Most Popular Actors by Rating</name>-->
+            <!--<description>Actors who have starred in the most films by rating</description>-->
+            <!--<type>BarChart</type>-->
+            <!--<query>-->
+                <!--SELECT f.rating, CONCAT(first_name, ' ', last_name), COUNT(*)-->
+                <!--FROM film_actor fa INNER JOIN actor a ON a.actor_id = fa.actor_id-->
+                <!--INNER JOIN film f ON f.film_id = fa.film_id-->
+                <!--WHERE rating IN ('G', 'PG')-->
+                <!--GROUP BY CONCAT(first_name, ' ', last_name), f.rating-->
+                <!--ORDER BY 2 DESC-->
+                <!--LIMIT 10-->
+            <!--</query>-->
+            <!--<datasource>db-world</datasource>-->
+        <!--</Chart>-->
     </Dashboard>
 </Charts>

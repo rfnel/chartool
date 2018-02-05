@@ -23,6 +23,7 @@
             <xs:element type="xs:string" name="description"/>
             <xs:element type="xs:string" name="type"/>
             <xs:element type="xs:string" name="query"/>
+            <xs:element type="xs:string" name="datasource"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

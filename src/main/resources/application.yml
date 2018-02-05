@@ -1,7 +1,32 @@
-spring:
-        datasource:
-                driverClassName: com.mysql.jdbc.Driver
-                url: jdbc:mysql://localhost:3306/sakila
-                username: testuser
-                password: testpassword
+#spring:
+#        datasource:
+#            db-main:
+#                driverClassName: com.mysql.jdbc.Driver
+#                url: jdbc:mysql://localhost:3306/sakila
+#                username: testuser
+#                password: testpassword
+#            db-secondary:
+#                driverClassName: com.mysql.jdbc.Driver
+#                url: jdbc:mysql://localhost:3306/sakila
+#                username: testuser
+#                password: testpassword
 
+info:
+        build:
+                artifact: 1
+                name: 2
+                description: 3
+                version: 4
+
+chartool-datasource-bup:
+        build:
+                db-main:
+                        driverClassName: com.mysql.jdbc.Driver
+                        url: jdbc:mysql://localhost:3306/sakila
+                        username: testuser
+                        password: testpassword
+                db-world:
+                        driverClassName: com.mysql.jdbc.Driver
+                        url: jdbc:mysql://localhost:3306/world
+                        username: testuser
+                        password: testpassword

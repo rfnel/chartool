@@ -1,6 +1,8 @@
 package za.co.rin.chartool.charts.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -14,17 +16,24 @@ import java.util.List;
 @Component
 public class JdbcChartDataSource implements ChartDataSource {
 
+//    @Autowired
+//    private JdbcTemplate jdbcTemplate;
+
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    @Qualifier("datasources")
+    private Map<String, JdbcTemplate> jdbcTemplates;
+
 
     @Override
     public ChartData<KeyValueDataItem> getKeyValueDatasets(ChartDefinition chartDefinition) {
-        return jdbcTemplate.query(chartDefinition.getQuery(), new KeyValueResultSetExtractor());
+        System.out.println("Datasource: " + chartDefinition.getDatasource());
+        System.out.println("Datasources size : " + jdbcTemplates.size());
+        return jdbcTemplates.get(chartDefinition.getDatasource()).query(chartDefinition.getQuery(), new KeyValueResultSetExtractor());
     }
 
     @Override
     public ChartData<PointDataItem> getPointDatasets(ChartDefinition chartDefinition) {
-        return jdbcTemplate.query(chartDefinition.getQuery(), new PointResultSetExtractor());
+        return jdbcTemplates.get(chartDefinition.getDatasource()).query(chartDefinition.getQuery(), new PointResultSetExtractor());
     }
 
     private static class KeyValueResultSetExtractor implements ResultSetExtractor<ChartData<KeyValueDataItem>> {

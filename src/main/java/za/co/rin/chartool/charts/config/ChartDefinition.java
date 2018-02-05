@@ -7,6 +7,15 @@ public class ChartDefinition {
     private String description;
     private String type;
     private String query;
+    private String datasource;
+
+    public String getDatasource() {
+        return datasource;
+    }
+
+    public void setDatasource(String datasource) {
+        this.datasource = datasource;
+    }
 
     private int index;
 

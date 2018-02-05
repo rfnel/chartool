@@ -79,6 +79,7 @@ public class DashboardManagerImpl implements DashboardManager {
         chartDefinition.setDescription(chart.getDescription());
         chartDefinition.setType(chart.getType());
         chartDefinition.setQuery(chart.getQuery());
+        chartDefinition.setDatasource(chart.getDatasource());
 
         return chartDefinition;
     }
