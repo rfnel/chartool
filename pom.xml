@@ -27,10 +27,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -78,6 +78,13 @@
             <version>2.6.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.1</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
