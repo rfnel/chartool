@@ -26,8 +26,6 @@ public class JdbcChartDataSource implements ChartDataSource {
 
     @Override
     public ChartData<KeyValueDataItem> getKeyValueDatasets(ChartDefinition chartDefinition) {
-        System.out.println("Datasource: " + chartDefinition.getDatasource());
-        System.out.println("Datasources size : " + jdbcTemplates.size());
         return jdbcTemplates.get(chartDefinition.getDatasource()).query(chartDefinition.getQuery(), new KeyValueResultSetExtractor());
     }
 
